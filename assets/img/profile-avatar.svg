@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" role="img" aria-label="Plavi profil avatar">
+  <defs>
+    <linearGradient id="blue" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#4c78d9"/><stop offset="1" stop-color="#203d8b"/>
+    </linearGradient>
+  </defs>
+  <circle cx="80" cy="80" r="80" fill="url(#blue)"/>
+  <circle cx="80" cy="59" r="17" fill="none" stroke="#9fc5ff" stroke-width="7"/>
+  <path d="M48 116c2-19 15-31 32-31s30 12 32 31" fill="none" stroke="#9fc5ff" stroke-width="7" stroke-linecap="round"/>
+</svg>

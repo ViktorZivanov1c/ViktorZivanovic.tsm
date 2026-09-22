@@ -224,7 +224,7 @@ function syncElectricTrace(trace) {
 let electricTraceIndex = 0;
 
 function initElectricTraces() {
-  document.querySelectorAll(".card, .btn, .side-nav a, .filter-chip, .sidebar-footer a").forEach((target) => {
+  document.querySelectorAll(".card, .recent-work-card, .btn, .side-nav a, .filter-chip, .sidebar-footer a").forEach((target) => {
     if ([...target.children].some((child) => child.classList.contains("electric-trace"))) return;
 
     const ns = "http://www.w3.org/2000/svg";
@@ -276,18 +276,99 @@ function initElectricTraces() {
 /* ---- Maxwell appears on every page as a small decorative spinning cat ---- */
 function addMaxwell() {
   if (document.querySelector(".maxwell-cat")) return;
+  const widget = document.createElement("div");
+  const homeSlot = document.createElement("div");
+  const homeButton = document.createElement("button");
   const maxwell = document.createElement("img");
+  widget.className = "maxwell-widget";
+  homeSlot.className = "maxwell-home-slot";
   maxwell.className = "maxwell-cat";
   maxwell.src = "assets/img/maxwell.gif";
   maxwell.alt = "";
+  maxwell.draggable = false;
   maxwell.setAttribute("aria-hidden", "true");
+  homeButton.type = "button";
+  homeButton.className = "btn maxwell-home";
+  homeButton.innerHTML = 'Maxwell go home! <span class="maxwell-paw" aria-hidden="true">🐾</span>';
+  widget.append(homeSlot, maxwell, homeButton);
+
   const sidebar = document.querySelector(".sidebar");
   const footer = sidebar?.querySelector(".sidebar-footer");
   if (sidebar && footer) {
-    sidebar.insertBefore(maxwell, footer);
+    sidebar.insertBefore(widget, footer);
   } else {
-    document.body.appendChild(maxwell);
+    document.body.appendChild(widget);
   }
+
+  function sendMaxwellHome() {
+    if (!maxwell.classList.contains("is-free") || returnAnimation) return;
+
+    const from = maxwell.getBoundingClientRect();
+    const destination = homeSlot.getBoundingClientRect();
+    maxwell.classList.remove("is-dragging");
+    const animation = maxwell.animate(
+      [
+        { left: `${from.left}px`, top: `${from.top}px` },
+        { left: `${destination.left}px`, top: `${destination.top}px` }
+      ],
+      { duration: 700, easing: "cubic-bezier(0.22, 1, 0.36, 1)", fill: "forwards" }
+    );
+    returnAnimation = animation;
+    const finishReturn = () => {
+      if (returnAnimation !== animation) return;
+      animation.cancel();
+      maxwell.classList.remove("is-free");
+      maxwell.style.removeProperty("left");
+      maxwell.style.removeProperty("top");
+      widget.classList.remove("is-maxwell-away");
+      returnAnimation = null;
+    };
+    animation.onfinish = finishReturn;
+    window.setTimeout(finishReturn, 750);
+  }
+
+  let dragOffsetX = 0;
+  let dragOffsetY = 0;
+  let dragging = false;
+  let returnAnimation = null;
+
+  maxwell.addEventListener("pointerdown", (event) => {
+    if (event.button !== 0) return;
+    if (returnAnimation) {
+      returnAnimation.cancel();
+      returnAnimation = null;
+    }
+    const bounds = maxwell.getBoundingClientRect();
+    widget.classList.add("is-maxwell-away");
+    dragOffsetX = event.clientX - bounds.left;
+    dragOffsetY = event.clientY - bounds.top;
+    maxwell.classList.add("is-free", "is-dragging");
+    maxwell.style.left = `${bounds.left}px`;
+    maxwell.style.top = `${bounds.top}px`;
+    maxwell.setPointerCapture(event.pointerId);
+    dragging = true;
+  });
+
+  maxwell.addEventListener("pointermove", (event) => {
+    if (!dragging) return;
+    const width = maxwell.offsetWidth;
+    const height = maxwell.offsetHeight;
+    const left = Math.min(Math.max(8, event.clientX - dragOffsetX), window.innerWidth - width - 8);
+    const top = Math.min(Math.max(8, event.clientY - dragOffsetY), window.innerHeight - height - 8);
+    maxwell.style.left = `${left}px`;
+    maxwell.style.top = `${top}px`;
+  });
+
+  function stopDragging(event) {
+    if (!dragging) return;
+    dragging = false;
+    maxwell.classList.remove("is-dragging");
+    if (maxwell.hasPointerCapture(event.pointerId)) maxwell.releasePointerCapture(event.pointerId);
+  }
+
+  maxwell.addEventListener("pointerup", stopDragging);
+  maxwell.addEventListener("pointercancel", stopDragging);
+  homeButton.addEventListener("click", sendMaxwellHome);
 }
 
 /* ---- Search + tech filter (used on assignments & homework pages) ---- */
@@ -393,6 +474,103 @@ function renderHomeStats() {
   }
 }
 
+/* ---- Home: latest work cards ---- */
+function recentWorkCardHTML(assignment) {
+  const screenshot = assignment.screenshots && assignment.screenshots[0];
+  const preview = screenshot
+    ? `<img src="${escapeHtml(screenshot)}" alt="Prikaz zadatka: ${escapeHtml(assignment.title)}" loading="lazy">`
+    : `<div class="recent-code" aria-hidden="true"><span>&lt;/${String(assignment.number).padStart(2, "0")}&gt;</span><i></i><i></i><i></i></div>`;
+
+  return `<article class="recent-work-card">
+    <div class="recent-preview">${preview}</div>
+    <div class="recent-work-card-body">
+      <span class="recent-label">ZADATAK #${assignment.number}</span>
+      <h3>${escapeHtml(assignment.title)}</h3>
+      <p>${escapeHtml(assignment.description || "Zadatak sa časa.")}</p>
+      <a href="assignments.html" class="recent-link">Pogledaj zadatak <span aria-hidden="true">›</span></a>
+    </div>
+  </article>`;
+}
+
+function renderRecentWork() {
+  const grid = document.getElementById("recent-work-grid");
+  if (!grid || typeof ASSIGNMENTS === "undefined") return;
+
+  const latest = ASSIGNMENTS.slice()
+    .sort((a, b) => new Date(b.date) - new Date(a.date) || b.number - a.number)
+    .slice(0, 3);
+  grid.innerHTML = latest.length
+    ? latest.map(recentWorkCardHTML).join("")
+    : '<p class="recent-empty">Još nema dodatih zadataka.</p>';
+}
+
+function initLiveClock() {
+  const clock = document.getElementById("live-clock");
+  if (!clock) return;
+
+  const updateClock = () => {
+    const now = new Date();
+    clock.dateTime = now.toISOString();
+    clock.textContent = now.toLocaleTimeString("sr-Latn-RS", {
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit"
+    });
+  };
+
+  updateClock();
+  window.setInterval(updateClock, 1000);
+}
+
+/* ---- Desktop cursor: a subtle neon ring for precise pointers only ---- */
+function initCustomCursor() {
+  const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)");
+  if (!finePointer.matches || document.querySelector(".custom-cursor")) return;
+
+  const cursor = document.createElement("div");
+  cursor.className = "custom-cursor";
+  cursor.setAttribute("aria-hidden", "true");
+  document.body.appendChild(cursor);
+  document.body.classList.add("custom-cursor-enabled");
+
+  document.addEventListener("pointermove", (event) => {
+    cursor.style.setProperty("--cursor-x", `${event.clientX}px`);
+    cursor.style.setProperty("--cursor-y", `${event.clientY}px`);
+    cursor.classList.add("is-visible");
+    cursor.classList.toggle("is-hovering", Boolean(event.target.closest("a, button, .card, .recent-work-card, .filter-chip")));
+  });
+
+  document.addEventListener("pointerleave", () => cursor.classList.remove("is-visible"));
+}
+
+/* ---- Internal pages transition through a short neon fade ---- */
+function initPageTransitions() {
+  const transition = document.createElement("div");
+  transition.className = "page-transition";
+  transition.setAttribute("aria-hidden", "true");
+  document.body.appendChild(transition);
+
+  window.requestAnimationFrame(() => document.body.classList.add("page-ready"));
+
+  document.querySelectorAll('a[href]').forEach((link) => {
+    link.addEventListener("click", (event) => {
+      const href = link.getAttribute("href");
+      if (
+        event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey ||
+        !href || href.startsWith("#") || href.startsWith("mailto:") || href.startsWith("tel:") ||
+        link.target === "_blank" || link.hasAttribute("download")
+      ) return;
+
+      const destination = new URL(href, window.location.href);
+      if (destination.origin !== window.location.origin || destination.href === window.location.href) return;
+
+      event.preventDefault();
+      document.body.classList.add("is-page-leaving");
+      window.setTimeout(() => { window.location.href = destination.href; }, 210);
+    });
+  });
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   applyConfig();
   initMobileNav();
@@ -401,8 +579,12 @@ document.addEventListener("DOMContentLoaded", () => {
   renderAssignmentsPage();
   renderHomeworkPage();
   renderHomeStats();
-  initElectricTraces();
+  renderRecentWork();
+  initLiveClock();
   addMaxwell();
+  initElectricTraces();
+  initCustomCursor();
+  initPageTransitions();
   window.addEventListener("resize", () => {
     document.querySelectorAll(".electric-trace").forEach(syncElectricTrace);
   });

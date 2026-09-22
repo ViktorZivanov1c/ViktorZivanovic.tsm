@@ -31,7 +31,7 @@
     </div>
 
     <div class="side-profile">
-      <div class="profile-avatar" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.5"/><path d="M4.5 20c.8-3.4 3.3-5.2 7.5-5.2s6.7 1.8 7.5 5.2"/></svg></div>
+      <div class="profile-avatar"><img src="assets/img/profile-avatar.svg" alt="Viktorov profil avatar"></div>
       <div class="profile-details">
         <div class="field"><span class="k">ime</span><span class="v" data-cfg="fullName">Viktor Zivanovic</span></div>
         <div class="field"><span class="k">skola</span><span class="v" data-cfg="school">Tehnicka skola Mladenovac</span></div>
@@ -40,9 +40,9 @@
     </div>
 
     <nav class="side-nav">
-      <a href="index.html"><span class="tag" aria-hidden="true">&#8962;</span>Pocetna<span class="nav-arrow" aria-hidden="true">&#8250;</span></a>
-      <a href="assignments.html"><span class="tag" aria-hidden="true">&#9638;</span>Zadaci<span class="nav-arrow" aria-hidden="true">&#8250;</span></a>
-      <a href="homework.html"><span class="tag" aria-hidden="true">&#9633;</span>Domaci<span class="nav-arrow" aria-hidden="true">&#8250;</span></a>
+      <a href="index.html"><span class="tag nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m3.5 10 8.5-7 8.5 7v10.5H14v-6H10v6H3.5z"/></svg></span>Po&#269;etna<span class="nav-arrow" aria-hidden="true">&#8250;</span></a>
+      <a href="assignments.html"><span class="tag nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 5h2.5M10 5h9M5 12h2.5M10 12h9M5 19h2.5M10 19h9"/></svg></span>Zadaci<span class="nav-arrow" aria-hidden="true">&#8250;</span></a>
+      <a href="homework.html"><span class="tag nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3.5 7.5h6l2-2h9v12h-17z"/></svg></span>Doma&#263;i<span class="nav-arrow" aria-hidden="true">&#8250;</span></a>
     </nav>
 
     <div class="sidebar-footer">
@@ -73,6 +73,23 @@
           <div class="book book-two"></div>
         </div>
       </section>
+
+      <section class="recent-work" aria-labelledby="recent-work-title">
+        <div class="recent-work-head">
+          <div>
+            <p class="section-kicker">Najnovije iz dnevnika</p>
+            <h2 id="recent-work-title">Skorašnji radovi</h2>
+          </div>
+          <div class="live-clock" aria-label="Trenutno vreme">
+            <span class="clock-dot" aria-hidden="true"></span>
+            <span class="clock-label">Vreme</span>
+            <time id="live-clock" aria-live="polite">--:--:--</time>
+          </div>
+        </div>
+        <div class="recent-work-grid" id="recent-work-grid"></div>
+      </section>
+
+      <footer class="site-footer">© 2026 Viktorov portfolio</footer>
 
     </div>
   </main>
