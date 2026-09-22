@@ -354,8 +354,8 @@ main.content {
   width: 7px;
   height: 7px;
   border-radius: 50%;
-  background: var(--success);
-  box-shadow: 0 0 0 3px var(--success-soft);
+  background: #540e09;
+  box-shadow: 0 0 0 3px rgba(206, 72, 62, 0.365);
 }
 
 .hero h1 {
