@@ -199,6 +199,97 @@ function wireThumbs(container) {
   });
 }
 
+/* ---- Hover electricity: a short spark moving along the element outline ---- */
+function syncElectricTrace(trace) {
+  const target = trace.parentElement;
+  const paths = trace.querySelectorAll("rect");
+  if (!target || !paths.length) return;
+
+  const width = target.clientWidth;
+  const height = target.clientHeight;
+  if (!width || !height) return;
+
+  const radius = Math.max(3, parseFloat(getComputedStyle(target).borderTopLeftRadius) || 0);
+  trace.setAttribute("viewBox", `0 0 ${width} ${height}`);
+  paths.forEach((path) => {
+    path.setAttribute("x", "0.75");
+    path.setAttribute("y", "0.75");
+    path.setAttribute("width", String(width - 1.5));
+    path.setAttribute("height", String(height - 1.5));
+    path.setAttribute("rx", String(radius));
+    path.setAttribute("ry", String(radius));
+  });
+}
+
+let electricTraceIndex = 0;
+
+function initElectricTraces() {
+  document.querySelectorAll(".card, .btn, .side-nav a, .filter-chip, .sidebar-footer a").forEach((target) => {
+    if ([...target.children].some((child) => child.classList.contains("electric-trace"))) return;
+
+    const ns = "http://www.w3.org/2000/svg";
+    const trace = document.createElementNS(ns, "svg");
+    const defs = document.createElementNS(ns, "defs");
+    const filter = document.createElementNS(ns, "filter");
+    const noise = document.createElementNS(ns, "feTurbulence");
+    const distortion = document.createElementNS(ns, "feDisplacementMap");
+    const glow = document.createElementNS(ns, "feDropShadow");
+    const rail = document.createElementNS(ns, "rect");
+    const spark = document.createElementNS(ns, "rect");
+    const filterId = `electric-spark-${electricTraceIndex++}`;
+
+    trace.classList.add("electric-trace");
+    trace.setAttribute("aria-hidden", "true");
+    trace.setAttribute("preserveAspectRatio", "none");
+    filter.setAttribute("id", filterId);
+    filter.setAttribute("x", "-15%");
+    filter.setAttribute("y", "-15%");
+    filter.setAttribute("width", "130%");
+    filter.setAttribute("height", "130%");
+    noise.setAttribute("type", "fractalNoise");
+    noise.setAttribute("baseFrequency", "0.025 0.42");
+    noise.setAttribute("numOctaves", "1");
+    noise.setAttribute("seed", String(electricTraceIndex));
+    noise.setAttribute("result", "noise");
+    distortion.setAttribute("in", "SourceGraphic");
+    distortion.setAttribute("in2", "noise");
+    distortion.setAttribute("scale", "1.4");
+    distortion.setAttribute("result", "distorted");
+    glow.setAttribute("in", "distorted");
+    glow.setAttribute("stdDeviation", "1.2");
+    glow.setAttribute("flood-color", "#46a0ff");
+    glow.setAttribute("flood-opacity", "0.95");
+    filter.append(noise, distortion, glow);
+    defs.appendChild(filter);
+    rail.classList.add("trace-rail");
+    rail.setAttribute("pathLength", "100");
+    spark.classList.add("trace-spark");
+    spark.setAttribute("pathLength", "100");
+    spark.style.filter = `url(#${filterId})`;
+
+    trace.append(defs, rail, spark);
+    target.appendChild(trace);
+    syncElectricTrace(trace);
+  });
+}
+
+/* ---- Maxwell appears on every page as a small decorative spinning cat ---- */
+function addMaxwell() {
+  if (document.querySelector(".maxwell-cat")) return;
+  const maxwell = document.createElement("img");
+  maxwell.className = "maxwell-cat";
+  maxwell.src = "assets/img/maxwell.gif";
+  maxwell.alt = "";
+  maxwell.setAttribute("aria-hidden", "true");
+  const sidebar = document.querySelector(".sidebar");
+  const footer = sidebar?.querySelector(".sidebar-footer");
+  if (sidebar && footer) {
+    sidebar.insertBefore(maxwell, footer);
+  } else {
+    document.body.appendChild(maxwell);
+  }
+}
+
 /* ---- Search + tech filter (used on assignments & homework pages) ---- */
 function initToolbar(gridEl, items) {
   const search = document.getElementById("search-input");
@@ -310,4 +401,9 @@ document.addEventListener("DOMContentLoaded", () => {
   renderAssignmentsPage();
   renderHomeworkPage();
   renderHomeStats();
+  initElectricTraces();
+  addMaxwell();
+  window.addEventListener("resize", () => {
+    document.querySelectorAll(".electric-trace").forEach(syncElectricTrace);
+  });
 });

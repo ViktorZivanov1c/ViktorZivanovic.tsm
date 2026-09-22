@@ -910,6 +910,16 @@ main.content {
   opacity: 1;
 }
 
+.maxwell-cat {
+  width: 125px;
+  height: auto;
+  pointer-events: none;
+  align-self: center;
+  margin-top: auto;
+  margin-bottom: 4px;
+  filter: drop-shadow(0 5px 8px rgba(0, 0, 0, 0.38));
+}
+
 /* ---------------------------------------------------------
    Filter / search bar
    --------------------------------------------------------- */
@@ -1165,6 +1175,69 @@ main.content {
   line-height: 1;
 }
 .lightbox-close:hover { color: var(--text); }
+
+/* Electric trace follows the real outline, never the element's interior. */
+@keyframes electric-trace-orbit {
+  to { stroke-dashoffset: -100; }
+}
+
+.card,
+.btn,
+.side-nav a,
+.filter-chip,
+.sidebar-footer a {
+  position: relative;
+}
+
+.electric-trace {
+  position: absolute;
+  inset: 1px;
+  z-index: 5;
+  width: calc(100% - 2px);
+  height: calc(100% - 2px);
+  overflow: visible;
+  pointer-events: none;
+}
+
+.electric-trace .trace-rail,
+.electric-trace .trace-spark {
+  fill: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  vector-effect: non-scaling-stroke;
+}
+
+.electric-trace .trace-rail {
+  stroke: rgba(56, 149, 255, 0.58);
+  stroke-width: 1;
+}
+
+.electric-trace .trace-spark {
+  stroke: #c4e6ff;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-dasharray: 0.8 1.2 2 0.9 0.7 1.1 1.4 0.8 2.1 89;
+  filter: drop-shadow(0 0 3px rgba(70, 160, 255, 0.95));
+}
+
+.card:hover .electric-trace .trace-rail,
+.btn:hover .electric-trace .trace-rail,
+.side-nav a:hover .electric-trace .trace-rail,
+.filter-chip:hover .electric-trace .trace-rail,
+.sidebar-footer a:hover .electric-trace .trace-rail {
+  opacity: 1;
+}
+
+.card:hover .electric-trace .trace-spark,
+.btn:hover .electric-trace .trace-spark,
+.side-nav a:hover .electric-trace .trace-spark,
+.filter-chip:hover .electric-trace .trace-spark,
+.sidebar-footer a:hover .electric-trace .trace-spark {
+  opacity: 1;
+  animation: electric-trace-orbit 10s linear infinite;
+}
+
+.card-grid + .empty-state { margin-top: 28px; }
 
 /* ---------------------------------------------------------
    Footer note (homework)
