@@ -13,4 +13,16 @@
     screenshots: ["assets/img/assignments/naziv-slike.png"]
   }
 */
-const ASSIGNMENTS = [];
+// Privremeni unosi za testiranje prikaza i pretrage.
+const ASSIGNMENTS = Array.from({ length: 20 }, (_, index) => {
+  const number = index + 1;
+  return {
+    number,
+    lesson: number,
+    title: `Zadatak ${number}`,
+    date: "2026-09-22",
+    description: "Ovde dodaj kratak opis zadatka.",
+    technologies: [],
+    screenshots: []
+  };
+});

@@ -14,4 +14,17 @@
     zipSize: "10 KB"
   }
 */
-const HOMEWORK = [];
+// Privremeni unosi za testiranje prikaza i pretrage.
+const HOMEWORK = Array.from({ length: 20 }, (_, index) => {
+  const number = index + 1;
+  return {
+    number,
+    title: `Domaci ${number}`,
+    date: "2026-09-22",
+    description: "Ovde dodaj kratak opis domaceg rada.",
+    technologies: [],
+    screenshot: "",
+    zip: "",
+    zipSize: ""
+  };
+});

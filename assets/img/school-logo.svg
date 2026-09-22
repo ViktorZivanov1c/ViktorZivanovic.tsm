@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 180" role="img" aria-labelledby="title">
+  <title id="title">Tehnicka skola Mladenovac</title>
+  <rect width="180" height="180" rx="22" fill="#fff"/>
+  <defs>
+    <filter id="shadow" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="4" stdDeviation="4" flood-color="#08235d" flood-opacity=".36"/></filter>
+    <linearGradient id="blue" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#2f79ed"/><stop offset="1" stop-color="#0c3c9d"/></linearGradient>
+  </defs>
+  <path filter="url(#shadow)" d="M90 12 112 29l35-4-2 32 19 28-25 23-6 34-43 24-43-24-6-34-25-23 19-28-2-32 35 4z" fill="url(#blue)" stroke="#174cba" stroke-width="5" stroke-linejoin="round"/>
+  <path d="M44 60h92" stroke="#fff" stroke-width="7" stroke-linecap="round" opacity=".9"/>
+  <text x="43" y="54" fill="#fff" font-family="Arial,sans-serif" font-size="17" font-weight="700">1907</text>
+  <text x="90" y="112" fill="#fff" font-family="Arial Black,Arial,sans-serif" font-size="57" font-weight="900" text-anchor="middle" font-style="italic">TSM</text>
+  <path d="M43 131c18 10 76 10 94 0" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round" opacity=".9"/>
+  <text x="90" y="149" fill="#fff" font-family="Arial,sans-serif" font-size="12" font-weight="700" text-anchor="middle">MLADENOVAC</text>
+</svg>

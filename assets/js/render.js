@@ -33,9 +33,6 @@ function applyConfig() {
   document.title = cfg.siteName || "Portfolio";
   document.querySelectorAll('[data-cfg-href="github"]').forEach((el) => { el.textContent = "GitHub profil"; });
   document.querySelectorAll('[data-cfg-href="email"]').forEach((el) => { el.textContent = "E-mail"; });
-  const kicker = document.querySelector(".hero .kicker");
-  if (kicker) kicker.textContent = "skolski radovi";
-
   document.querySelectorAll("[data-cfg]").forEach((el) => {
     const key = el.getAttribute("data-cfg");
     const map = {
@@ -137,11 +134,17 @@ function initLightbox() {
 /* ---- Card builders ---- */
 function assignmentCardHTML(a) {
   const shot = (a.screenshots && a.screenshots[0]) || "";
+  const preview = shot
+    ? `<button class="thumb" type="button" data-src="${escapeHtml(shot)}" data-title="Assignment ${a.number} — ${escapeHtml(a.title)}" aria-label="View screenshot for ${escapeHtml(a.title)}">
+        <img src="${escapeHtml(shot)}" alt="Screenshot for ${escapeHtml(a.title)}" loading="lazy">
+      </button>`
+    : `<div class="thumb thumb-placeholder" aria-hidden="true">
+        <span class="placeholder-number">${String(a.number).padStart(2, "0")}</span>
+        <span class="placeholder-label">zadatak</span>
+      </div>`;
   return `
     <article class="card" data-title="${escapeHtml(a.title)}" data-tech="${escapeHtml((a.technologies || []).join(","))}">
-      <button class="thumb" type="button" data-src="${escapeHtml(shot)}" data-title="Assignment ${a.number} — ${escapeHtml(a.title)}" aria-label="View screenshot for ${escapeHtml(a.title)}">
-        ${shot ? `<img src="${escapeHtml(shot)}" alt="Screenshot for ${escapeHtml(a.title)}" loading="lazy">` : ""}
-      </button>
+      ${preview}
       <div class="card-body">
         <div class="card-top">
           <span class="badge">#${a.number}</span>
@@ -158,11 +161,17 @@ function assignmentCardHTML(a) {
 }
 
 function homeworkCardHTML(h) {
+  const preview = h.screenshot
+    ? `<button class="thumb" type="button" data-src="${escapeHtml(h.screenshot)}" data-title="Domaci rad ${h.number} — ${escapeHtml(h.title)}" aria-label="View screenshot for ${escapeHtml(h.title)}">
+        <img src="${escapeHtml(h.screenshot)}" alt="Screenshot for ${escapeHtml(h.title)}" loading="lazy">
+      </button>`
+    : `<div class="thumb thumb-placeholder" aria-hidden="true">
+        <span class="placeholder-number">${String(h.number).padStart(2, "0")}</span>
+        <span class="placeholder-label">domaci</span>
+      </div>`;
   return `
     <article class="card" data-title="${escapeHtml(h.title)}" data-tech="${escapeHtml((h.technologies || []).join(","))}">
-      <button class="thumb" type="button" data-src="${escapeHtml(h.screenshot || "")}" data-title="Homework ${h.number} — ${escapeHtml(h.title)}" aria-label="View screenshot for ${escapeHtml(h.title)}">
-        ${h.screenshot ? `<img src="${escapeHtml(h.screenshot)}" alt="Screenshot for ${escapeHtml(h.title)}" loading="lazy">` : ""}
-      </button>
+      ${preview}
       <div class="card-body">
         <div class="card-top">
           <span class="badge">DOMACI #${h.number}</span>
@@ -173,15 +182,15 @@ function homeworkCardHTML(h) {
         <div class="card-tags">
           ${(h.technologies || []).map((t) => `<span class="chip">${escapeHtml(t)}</span>`).join("")}
         </div>
-        <div class="card-actions">
+        ${h.zip ? `<div class="card-actions">
           <a class="btn primary" href="${escapeHtml(h.zip)}" download>Download ZIP${h.zipSize ? ` · ${escapeHtml(h.zipSize)}` : ""}</a>
-        </div>
+        </div>` : ""}
       </div>
     </article>`;
 }
 
 function wireThumbs(container) {
-  container.querySelectorAll(".thumb").forEach((btn) => {
+  container.querySelectorAll("button.thumb").forEach((btn) => {
     btn.addEventListener("click", () => {
       const src = btn.getAttribute("data-src");
       const title = btn.getAttribute("data-title");
@@ -254,7 +263,7 @@ function renderHomeworkPage() {
   const grid = document.getElementById("homework-grid");
   if (!grid || typeof HOMEWORK === "undefined") return;
   const pageDescription = document.querySelector(".page-head .desc");
-  if (pageDescription) pageDescription.textContent = "Ovde dodajem domace radove, njihove slike i ZIP fajlove za preuzimanje.";
+  if (pageDescription) pageDescription.textContent = "Ovde dodajem domace radove.";
   const notice = document.querySelector(".notice span:last-child");
   if (notice) notice.textContent = "Svaki domaci moze da sadrzi sliku i ZIP fajl projekta za preuzimanje.";
   const search = document.getElementById("search-input");
