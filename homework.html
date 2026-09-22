@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="sr-Latn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Notebook — Homework</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💻</text></svg>">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+<div class="topbar">
+  <div class="brand">
+    <div class="brand-mark">&lt;/&gt;</div>
+    <div class="brand-text"><span class="name" data-cfg="siteName">Notebook</span></div>
+  </div>
+  <button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation">☰</button>
+</div>
+
+<div class="shell">
+  <aside class="sidebar" id="sidebar">
+    <div class="brand">
+      <div class="brand-mark">&lt;/&gt;</div>
+      <div class="brand-text">
+        <span class="name" data-cfg="siteName">Notebook</span>
+        <span class="role">skolski portfolio</span>
+      </div>
+    </div>
+
+    <div class="side-profile">
+      <div class="field"><span class="k">ime</span><span class="v" data-cfg="fullName">Viktor Zivanovic</span></div>
+      <div class="field"><span class="k">skola</span><span class="v" data-cfg="school">Tehnicka skola Mladenovac</span></div>
+      <div class="field"><span class="k">odeljenje</span><span class="v" data-cfg="grade">III/4</span></div>
+    </div>
+
+    <nav class="side-nav">
+      <a href="index.html"><span class="tag">~/</span>Pocetna</a>
+      <a href="assignments.html"><span class="tag">~/</span>Zadaci</a>
+      <a href="homework.html"><span class="tag">~/</span>Domaci</a>
+    </nav>
+
+    <div class="sidebar-footer">
+      <a data-cfg-href="github" href="#" target="_blank" rel="noopener">→ GitHub profile</a>
+      <a data-cfg-href="email" href="#">→ Email</a>
+    </div>
+  </aside>
+
+  <main class="content">
+    <div class="wrap">
+
+      <div class="page-head">
+        <div class="eyebrow">~/homework · <span id="homework-count">0</span> submitted</div>
+        <h1>Domaci radovi</h1>
+        <p class="desc">Full take-home projects, each with a source download. Files are for download only — nothing here runs in the browser.</p>
+      </div>
+
+      <div class="notice">
+        <span>⬇</span>
+        <span>Each entry links to a ZIP of the complete project source. Download and open it locally to run or review the code.</span>
+      </div>
+
+      <div class="toolbar">
+        <input type="text" id="search-input" class="search-input" placeholder="Search homework by title…">
+      </div>
+      <div class="card-grid" id="homework-grid"></div>
+      <div class="empty-state" id="empty-state">Jos nema dodatih domacih radova.</div>
+
+    </div>
+  </main>
+</div>
+
+<div class="lightbox" id="lightbox">
+  <div class="lightbox-inner">
+    <div class="lightbox-head">
+      <span id="lightbox-label"></span>
+      <button class="lightbox-close" id="lightbox-close" aria-label="Close">✕</button>
+    </div>
+    <img id="lightbox-img" src="" alt="">
+  </div>
+</div>
+
+<script src="assets/js/config.js"></script>
+<script src="assets/js/data-homework.js"></script>
+<script src="assets/js/render.js"></script>
+</body>
+</html>

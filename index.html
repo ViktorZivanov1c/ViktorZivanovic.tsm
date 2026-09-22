@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="sr-Latn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Notebook — Home</title>
+<meta name="description" content="A running record of my programming class — assignments, homework, and everything I'm learning along the way.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💻</text></svg>">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+<div class="topbar">
+  <div class="brand">
+    <div class="brand-mark">&lt;/&gt;</div>
+    <div class="brand-text">
+      <span class="name" data-cfg="siteName">Notebook</span>
+    </div>
+  </div>
+  <button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation">☰</button>
+</div>
+
+<div class="shell">
+  <aside class="sidebar" id="sidebar">
+    <div class="brand">
+      <div class="brand-mark">&lt;/&gt;</div>
+      <div class="brand-text">
+        <span class="name" data-cfg="siteName">Viktorov dragi dnevnik</span>
+        <span class="role">skolski portfolio</span>
+      </div>
+    </div>
+
+    <div class="side-profile">
+      <div class="field"><span class="k">ime</span><span class="v" data-cfg="fullName">Viktor Zivanovic</span></div>
+      <div class="field"><span class="k">skola</span><span class="v" data-cfg="school">Tehnicka skola Mladenovac</span></div>
+      <div class="field"><span class="k">odeljenje</span><span class="v" data-cfg="grade">III/4</span></div>
+    </div>
+
+    <nav class="side-nav">
+      <a href="index.html"><span class="tag">~/</span>Pocetna</a>
+      <a href="assignments.html"><span class="tag">~/</span>Zadaci</a>
+      <a href="homework.html"><span class="tag">~/</span>Domaci</a>
+    </nav>
+
+    <div class="sidebar-footer">
+      <a data-cfg-href="github" href="#" target="_blank" rel="noopener">→ GitHub profile</a>
+      <a data-cfg-href="email" href="#">→ Email</a>
+    </div>
+  </aside>
+
+  <main class="content">
+    <div class="wrap">
+
+      <section class="hero">
+        <div>
+          <div class="kicker">available · currently learning</div>
+          <h1><span data-cfg="firstName">Viktor</span> <span class="last" data-cfg="lastName">Zivanovic</span></h1>
+          <p class="bio" data-cfg="bio">Ucenik Tehnicke skole Mladenovac.</p>
+          <div class="chip-row">
+            <a class="btn primary" href="assignments.html">Pogledaj zadatke</a>
+            <a class="btn" href="homework.html">Pogledaj domace</a>
+          </div>
+        </div>
+
+        <div class="hero-card">
+          <div class="hc-head">
+            <span class="hc-dot"></span><span class="hc-dot"></span><span class="hc-dot"></span>
+            <span style="margin-left:6px;">profile.json</span>
+          </div>
+          <div class="hc-body" id="latest-list">
+            <div class="hc-row"><span class="k">username</span><span class="v" data-cfg="username">[USERNAME]</span></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="stats-row">
+        <div class="stat">
+          <div class="num" id="stat-assignments">0</div>
+          <div class="label">dodatih zadataka</div>
+        </div>
+        <div class="stat">
+          <div class="num" id="stat-homework">0</div>
+          <div class="label">dodatih domacih</div>
+        </div>
+      </section>
+
+      <section class="section-block">
+        <h2>O portfoliju</h2>
+        <p class="about-text" data-cfg="tagline">Moji skolski zadaci i domaci radovi.</p>
+      </section>
+
+    </div>
+  </main>
+</div>
+
+<div class="lightbox" id="lightbox">
+  <div class="lightbox-inner">
+    <div class="lightbox-head">
+      <span id="lightbox-label"></span>
+      <button class="lightbox-close" id="lightbox-close" aria-label="Close">✕</button>
+    </div>
+    <img id="lightbox-img" src="" alt="">
+  </div>
+</div>
+
+<script src="assets/js/config.js"></script>
+<script src="assets/js/data-assignments.js"></script>
+<script src="assets/js/data-homework.js"></script>
+<script src="assets/js/render.js"></script>
+</body>
+</html>

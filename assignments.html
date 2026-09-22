@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="sr-Latn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Notebook — Assignments</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💻</text></svg>">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+<div class="topbar">
+  <div class="brand">
+    <div class="brand-mark">&lt;/&gt;</div>
+    <div class="brand-text"><span class="name" data-cfg="siteName">Notebook</span></div>
+  </div>
+  <button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation">☰</button>
+</div>
+
+<div class="shell">
+  <aside class="sidebar" id="sidebar">
+    <div class="brand">
+      <div class="brand-mark">&lt;/&gt;</div>
+      <div class="brand-text">
+        <span class="name" data-cfg="siteName">Viktorov dragi dnevnik</span>
+        <span class="role">skolski portfolio</span>
+      </div>
+    </div>
+
+    <div class="side-profile">
+      <div class="field"><span class="k">ime</span><span class="v" data-cfg="fullName">Viktor Zivanovic</span></div>
+      <div class="field"><span class="k">skola</span><span class="v" data-cfg="school">Tehnicka skola Mladenovac</span></div>
+      <div class="field"><span class="k">odeljenje</span><span class="v" data-cfg="grade">III/4</span></div>
+    </div>
+
+    <nav class="side-nav">
+      <a href="index.html"><span class="tag">~/</span>Pocetna</a>
+      <a href="assignments.html"><span class="tag">~/</span>Zadaci</a>
+      <a href="homework.html"><span class="tag">~/</span>Domaci</a>
+    </nav>
+
+    <div class="sidebar-footer">
+      <a data-cfg-href="github" href="#" target="_blank" rel="noopener">→ GitHub profile</a>
+      <a data-cfg-href="email" href="#">→ Email</a>
+    </div>
+  </aside>
+
+  <main class="content">
+    <div class="wrap">
+
+      <div class="page-head">
+        <div class="eyebrow">~/assignments · <span id="assignments-count">0</span> logged</div>
+        <h1>Zadaci sa casova</h1>
+        <p class="desc">Short exercises from each lesson — one per class, roughly in the order they were assigned.</p>
+      </div>
+
+      <div class="toolbar">
+        <input type="text" id="search-input" class="search-input" placeholder="Search assignments by title…">
+      </div>
+      <div class="card-grid" id="assignments-grid"></div>
+      <div class="empty-state" id="empty-state">Jos nema dodatih zadataka.</div>
+
+    </div>
+  </main>
+</div>
+
+<div class="lightbox" id="lightbox">
+  <div class="lightbox-inner">
+    <div class="lightbox-head">
+      <span id="lightbox-label"></span>
+      <button class="lightbox-close" id="lightbox-close" aria-label="Close">✕</button>
+    </div>
+    <img id="lightbox-img" src="" alt="">
+  </div>
+</div>
+
+<script src="assets/js/config.js"></script>
+<script src="assets/js/data-assignments.js"></script>
+<script src="assets/js/render.js"></script>
+</body>
+</html>
