@@ -508,6 +508,61 @@ function initLiveClock() {
   const clock = document.getElementById("live-clock");
   if (!clock) return;
 
+  const lessonStatus = document.getElementById("lesson-status");
+  const lessonCountdown = document.getElementById("lesson-countdown");
+  const lessonSchedule = [
+    { number: 1, start: "07:50", end: "08:35" },
+    { number: 2, start: "08:40", end: "09:25" },
+    { number: 3, start: "09:45", end: "10:30" },
+    { number: 4, start: "10:35", end: "11:20" },
+    { number: 5, start: "11:35", end: "12:20" },
+    { number: 6, start: "12:25", end: "13:10" },
+    { number: 7, start: "13:15", end: "14:00" }
+  ];
+
+  const secondsForTime = (time) => {
+    const [hours, minutes] = time.split(":").map(Number);
+    return hours * 3600 + minutes * 60;
+  };
+
+  const formatCountdown = (seconds) => {
+    const remaining = Math.max(0, Math.floor(seconds));
+    const minutes = String(Math.floor(remaining / 60)).padStart(2, "0");
+    const secs = String(remaining % 60).padStart(2, "0");
+    return `${minutes}:${secs}`;
+  };
+
+  const updateLessonTimer = (now) => {
+    if (!lessonStatus || !lessonCountdown) return;
+    const day = now.getDay();
+    if (day === 0 || day === 6) {
+      lessonStatus.textContent = "Danas nema nastave";
+      lessonCountdown.textContent = "Vikend";
+      return;
+    }
+
+    const nowInSeconds = now.getHours() * 3600 + now.getMinutes() * 60 + now.getSeconds();
+    const currentLesson = lessonSchedule.find((lesson) =>
+      nowInSeconds >= secondsForTime(lesson.start) && nowInSeconds < secondsForTime(lesson.end)
+    );
+
+    if (currentLesson) {
+      lessonStatus.textContent = `Do kraja ${currentLesson.number}. časa`;
+      lessonCountdown.textContent = formatCountdown(secondsForTime(currentLesson.end) - nowInSeconds);
+      return;
+    }
+
+    const nextLesson = lessonSchedule.find((lesson) => nowInSeconds < secondsForTime(lesson.start));
+    if (nextLesson) {
+      lessonStatus.textContent = `${nextLesson.number}. čas počinje za`;
+      lessonCountdown.textContent = formatCountdown(secondsForTime(nextLesson.start) - nowInSeconds);
+      return;
+    }
+
+    lessonStatus.textContent = "Nastava je završena";
+    lessonCountdown.textContent = "Do sutra";
+  };
+
   const updateClock = () => {
     const now = new Date();
     clock.dateTime = now.toISOString();
@@ -516,10 +571,19 @@ function initLiveClock() {
       minute: "2-digit",
       second: "2-digit"
     });
+    updateLessonTimer(now);
   };
 
   updateClock();
   window.setInterval(updateClock, 1000);
+}
+
+/* ---- Sidebar: a freshly randomized quote on every page load ---- */
+function renderDailyQuote() {
+  const quote = document.getElementById("daily-quote");
+  if (!quote || typeof DAILY_QUOTES === "undefined" || !DAILY_QUOTES.length) return;
+  const selectedQuote = DAILY_QUOTES[Math.floor(Math.random() * DAILY_QUOTES.length)];
+  quote.textContent = `“${selectedQuote}”`;
 }
 
 /* ---- Desktop cursor: a subtle neon ring for precise pointers only ---- */
@@ -581,6 +645,7 @@ document.addEventListener("DOMContentLoaded", () => {
   renderHomeStats();
   renderRecentWork();
   initLiveClock();
+  renderDailyQuote();
   addMaxwell();
   initElectricTraces();
   initCustomCursor();
