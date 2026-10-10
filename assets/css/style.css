@@ -1811,28 +1811,28 @@ html {
   box-shadow: 0 0 10px rgba(76, 215, 255, 0.7), inset 0 0 0 1px rgba(236, 255, 255, 0.7);
 }
 
-/* Desktop pointer ring. Touch and keyboard navigation keep their normal behavior. */
+/* Desktop cursor. Touch and keyboard navigation keep their normal behavior. */
 .custom-cursor {
   position: fixed;
   top: 0;
   left: 0;
   z-index: 1000;
-  width: 30px;
-  height: 37px;
+  width: 22px;
+  height: 28px;
   background: url("../img/cursor-arrow.svg") center / contain no-repeat;
-  filter: drop-shadow(0 0 5px rgba(32, 204, 255, 0.55));
+  filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.42));
   opacity: 0;
   pointer-events: none;
-  transform: translate3d(var(--cursor-x, -30px), var(--cursor-y, -30px), 0) translate(-18%, -12%) scale(1);
+  transform: translate3d(var(--cursor-x, -30px), var(--cursor-y, -30px), 0) translate(-6%, -5%) scale(1);
   transition: width 0.14s ease, height 0.14s ease, opacity 0.15s ease, filter 0.15s ease;
 }
 
 .custom-cursor.is-visible { opacity: 1; }
 .custom-cursor.is-hovering {
-  width: 34px;
-  height: 41px;
+  width: 24px;
+  height: 29px;
   background-image: url("../img/cursor-hand.svg");
-  filter: drop-shadow(0 0 7px rgba(55, 218, 255, 0.72));
+  filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.42));
 }
 
 @media (hover: hover) and (pointer: fine) {

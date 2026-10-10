@@ -586,7 +586,7 @@ function renderDailyQuote() {
   quote.textContent = `“${selectedQuote}”`;
 }
 
-/* ---- Desktop cursor: a subtle neon ring for precise pointers only ---- */
+/* ---- Desktop cursor: compact Windows-style pointer for precise pointers only ---- */
 function initCustomCursor() {
   const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)");
   if (!finePointer.matches || document.querySelector(".custom-cursor")) return;
@@ -601,7 +601,7 @@ function initCustomCursor() {
     cursor.style.setProperty("--cursor-x", `${event.clientX}px`);
     cursor.style.setProperty("--cursor-y", `${event.clientY}px`);
     cursor.classList.add("is-visible");
-    cursor.classList.toggle("is-hovering", Boolean(event.target.closest("a, button, .card, .recent-work-card, .filter-chip")));
+    cursor.classList.toggle("is-hovering", Boolean(event.target.closest("a, button, input, select, textarea, label, .card, .recent-work-card, .filter-chip")));
   });
 
   document.addEventListener("pointerleave", () => cursor.classList.remove("is-visible"));
