@@ -23,6 +23,8 @@ const ASSIGNMENTS = Array.from({ length: 20 }, (_, index) => {
     date: "2026-09-22",
     description: "Ovde dodaj kratak opis zadatka.",
     technologies: [],
-    screenshots: []
+    screenshots: [],
+    // Opciona pravila za proveru izvornog C# koda, npr. ["Console.WriteLine"].
+    requiredPatterns: []
   };
 });

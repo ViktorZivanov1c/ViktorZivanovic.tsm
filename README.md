@@ -128,6 +128,22 @@ code, it just links to the file.
 
 ---
 
+## Rad u zadatku na sajtu
+
+Klikni **"Otvori zadatak"** na kartici zadatka. Na toj stranici možeš da
+nalepiš C# kod iz Visual Studija i dodaš jedan screenshot kao dokaz. Kod i
+slika čuvaju se lokalno u tom pregledaču, pa se ne šalju nigde automatski.
+
+Za osnovnu proveru možeš svakom zadatku dodati `requiredPatterns`, na primer:
+
+```js
+requiredPatterns: ["Console.WriteLine", "for"]
+```
+
+Statički sajt ne može bezbedno da kompajlira ili pokrene C# kod. Za stvarne
+testove (ulaz/izlaz i kompajliranje) potreban je poseban backend sa izolovanim
+izvršavanjem koda.
+
 ## Design notes
 
 - Dark, editor-inspired theme (sidebar navigation, monospace accents

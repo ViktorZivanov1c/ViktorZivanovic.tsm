@@ -25,7 +25,7 @@ function initials(cfg) {
 
 /* ---- Apply SITE_CONFIG to every [data-cfg] element on the page ---- */
 function applyConfig() {
-  const cfg = window.SITE_CONFIG;
+  const cfg = typeof SITE_CONFIG !== "undefined" ? SITE_CONFIG : null;
   if (!cfg) return;
 
   const fullName = `${cfg.firstName} ${cfg.lastName}`.trim();
@@ -155,6 +155,9 @@ function assignmentCardHTML(a) {
         <p class="desc">${escapeHtml(a.description)}</p>
         <div class="card-tags">
           ${(a.technologies || []).map((t) => `<span class="chip">${escapeHtml(t)}</span>`).join("")}
+        </div>
+        <div class="card-actions">
+          <a class="btn primary" href="task.html?id=${encodeURIComponent(a.number)}">Otvori zadatak <span aria-hidden="true">→</span></a>
         </div>
       </div>
     </article>`;
@@ -457,7 +460,7 @@ function renderHomeStats() {
   const tCount = document.getElementById("stat-tech");
   if (aCount) aCount.textContent = typeof ASSIGNMENTS !== "undefined" ? ASSIGNMENTS.length : "0";
   if (hCount) hCount.textContent = typeof HOMEWORK !== "undefined" ? HOMEWORK.length : "0";
-  if (tCount) tCount.textContent = (window.SITE_CONFIG?.technologies || []).length;
+  if (tCount) tCount.textContent = (typeof SITE_CONFIG !== "undefined" ? SITE_CONFIG.technologies || [] : []).length;
 
   const latest = document.getElementById("latest-list");
   if (latest && typeof ASSIGNMENTS !== "undefined") {
