@@ -36,6 +36,30 @@ const ASSIGNMENTS = Array.from({ length: 20 }, (_, index) => {
       codeFile: "assets/files/zadatak-01.cs",
       requiredPatterns: ["Console.WriteLine", "Console.ReadKey"]
     });
+  } else if (number === 2) {
+    Object.assign(assignment, {
+      title: "Promenljive",
+      description: "Ispis podataka iz promenljivih različitih tipova.",
+      technologies: ["C#", "Promenljive"],
+      screenshots: ["assets/img/assignments/zadatak-02.png"],
+      codeFile: "assets/files/zadatak-02.cs"
+    });
+  } else if (number === 3) {
+    Object.assign(assignment, {
+      title: "Poređenje brojeva",
+      description: "Unos dva broja i određivanje većeg broja ili jednakosti.",
+      technologies: ["C#", "Uslovi"],
+      screenshots: ["assets/img/assignments/zadatak-03.png"],
+      codeFile: "assets/files/zadatak-03.cs"
+    });
+  } else if (number === 4) {
+    Object.assign(assignment, {
+      title: "Metode i brojač",
+      description: "Pozivanje metoda i praćenje broja njihovih poziva.",
+      technologies: ["C#", "Metode"],
+      screenshots: ["assets/img/assignments/zadatak-04.png"],
+      codeFile: "assets/files/zadatak-04.cs"
+    });
   }
 
   return assignment;
