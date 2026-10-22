@@ -16,7 +16,7 @@
 // Privremeni unosi za testiranje prikaza i pretrage.
 const ASSIGNMENTS = Array.from({ length: 20 }, (_, index) => {
   const number = index + 1;
-  return {
+  const assignment = {
     number,
     lesson: number,
     title: `Zadatak ${number}`,
@@ -27,4 +27,16 @@ const ASSIGNMENTS = Array.from({ length: 20 }, (_, index) => {
     // Opciona pravila za proveru izvornog C# koda, npr. ["Console.WriteLine"].
     requiredPatterns: []
   };
+
+  if (number === 1) {
+    Object.assign(assignment, {
+      description: "Moj prvi C# program — ispis poruke u konzoli.",
+      technologies: ["C#", "Console"],
+      screenshots: ["assets/img/assignments/zadatak-01.png"],
+      codeFile: "assets/files/zadatak-01.cs",
+      requiredPatterns: ["Console.WriteLine", "Console.ReadKey"]
+    });
+  }
+
+  return assignment;
 });

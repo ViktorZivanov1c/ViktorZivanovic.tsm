@@ -1185,12 +1185,13 @@ main.content {
 .test-result.success, .submission-status.success { color: #7cf0ba; }
 .test-result.error, .submission-status.error { color: #ff9eaa; }
 .test-result.warning { color: #f3d47b; }
-.proof-dropzone { display: grid; min-height: 260px; place-items: center; overflow: hidden; border: 1px dashed rgba(112, 222, 255, .57); border-radius: 8px; background: rgba(4, 20, 40, .62); color: #c1eaff; cursor: pointer; text-align: center; }
+.proof-dropzone { display: grid; min-height: 360px; place-items: center; overflow: hidden; border: 1px dashed rgba(112, 222, 255, .57); border-radius: 8px; background: rgba(4, 20, 40, .62); color: #c1eaff; cursor: pointer; text-align: center; }
 .proof-dropzone:hover { border-color: #83efff; background: rgba(21, 86, 123, .28); }
 .proof-dropzone #proof-empty { display: grid; gap: 5px; padding: 20px; }
 .proof-dropzone strong { color: #85edff; font-size: 14px; }
 .proof-dropzone small { color: #92b6cf; font: 11px var(--font-mono); }
-.proof-dropzone img { width: 100%; height: 100%; max-height: 390px; object-fit: contain; background: #04101f; }
+.proof-dropzone img { width: 100%; height: 100%; max-height: 520px; object-fit: contain; background: #04101f; }
+.proof-panel #view-proof { width: 100%; justify-content: center; margin-top: 10px; }
 .remove-proof { width: 100%; justify-content: center; margin-top: 10px; }
 .task-missing { padding: 50px 0; color: var(--text-muted); }
 .task-missing p { margin: 8px 0 18px; }

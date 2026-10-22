@@ -43,18 +43,32 @@
   function showProof(src) {
     const image = document.getElementById("proof-preview");
     const empty = document.getElementById("proof-empty");
+    const view = document.getElementById("view-proof");
     currentProof = src || "";
     image.src = currentProof;
     image.hidden = !currentProof;
     empty.hidden = Boolean(currentProof);
+    view.disabled = !currentProof;
   }
 
   async function loadSubmission() {
     const stored = await getSubmission(String(assignment.number));
-    if (!stored) return;
+    if (!stored) return false;
     document.getElementById("code-input").value = stored.code || "";
     showProof(stored.proof || "");
     if (stored.savedAt) setStatus(`Sačuvano na ovom uređaju: ${new Date(stored.savedAt).toLocaleString("sr-Latn-RS")}.`, "success");
+    return true;
+  }
+
+  async function loadPublishedSubmission() {
+    const codeInput = document.getElementById("code-input");
+    const screenshot = assignment.screenshots?.[0];
+    if (screenshot) showProof(screenshot);
+    if (!assignment.codeFile) return;
+    const response = await fetch(assignment.codeFile);
+    if (!response.ok) throw new Error("Code file could not be loaded.");
+    codeInput.value = await response.text();
+    setStatus("Prikazan je objavljen kod i dokaz za ovaj zadatak.", "success");
   }
 
   function testCode() {
@@ -95,8 +109,13 @@
     document.getElementById("task-description").textContent = assignment.description;
     document.getElementById("task-lesson").textContent = `Čas ${assignment.lesson}`;
 
-    try { await openDatabase(); await loadSubmission(); }
+    let hasLocalSubmission = false;
+    try { await openDatabase(); hasLocalSubmission = await loadSubmission(); }
     catch (_) { setStatus("Pregledač ne dozvoljava lokalno čuvanje. I dalje možeš da preuzmeš svoj kod.", "error"); }
+    if (!hasLocalSubmission) {
+      try { await loadPublishedSubmission(); }
+      catch (_) { setStatus("Objavljeni kod nije mogao da se učita.", "error"); }
+    }
 
     document.getElementById("proof-input").addEventListener("change", (event) => {
       const file = event.target.files?.[0];
@@ -108,6 +127,9 @@
       reader.readAsDataURL(file);
     });
     document.getElementById("remove-proof").addEventListener("click", () => { document.getElementById("proof-input").value = ""; showProof(""); setStatus("Dokaz je uklonjen. Sačuvaj izmene."); });
+    document.getElementById("view-proof").addEventListener("click", () => {
+      if (currentProof && window.__openLightbox) window.__openLightbox(currentProof, `Dokaz — ${assignment.title}`);
+    });
     document.getElementById("save-submission").addEventListener("click", async () => {
       if (!database) return;
       try {
