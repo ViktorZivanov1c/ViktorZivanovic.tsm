@@ -1180,6 +1180,7 @@ main.content {
 .panel-note { color: #8eb8d0; font: 11px var(--font-mono); text-align: right; }
 .code-input { display: block; width: 100%; min-height: 430px; resize: vertical; padding: 16px; border: 1px solid rgba(100, 211, 255, .32); border-radius: 8px; outline: none; background: #061426; color: #e5f8ff; font: 13px/1.6 var(--font-mono); tab-size: 2; }
 .code-input:focus { border-color: #5ae4ff; box-shadow: 0 0 0 3px rgba(65, 210, 255, .13); }
+.code-view { min-height: 430px; margin: 0; padding: 16px; overflow: auto; border: 1px solid rgba(100, 211, 255, .32); border-radius: 8px; background: #061426; color: #e5f8ff; font: 13px/1.6 var(--font-mono); tab-size: 2; white-space: pre; }
 .panel-actions { display: flex; flex-wrap: wrap; gap: 9px; margin-top: 14px; }
 .test-result, .submission-status { margin: 14px 0 0; color: #9bbdd2; font-size: 12.5px; }
 .test-result.success, .submission-status.success { color: #7cf0ba; }
@@ -1188,10 +1189,16 @@ main.content {
 .proof-dropzone { display: grid; min-height: 360px; place-items: center; overflow: hidden; border: 1px dashed rgba(112, 222, 255, .57); border-radius: 8px; background: rgba(4, 20, 40, .62); color: #c1eaff; cursor: pointer; text-align: center; }
 .proof-dropzone:hover { border-color: #83efff; background: rgba(21, 86, 123, .28); }
 .proof-dropzone #proof-empty { display: grid; gap: 5px; padding: 20px; }
+.proof-dropzone #proof-empty[hidden] { display: none; }
 .proof-dropzone strong { color: #85edff; font-size: 14px; }
 .proof-dropzone small { color: #92b6cf; font: 11px var(--font-mono); }
 .proof-dropzone img { width: 100%; height: 100%; max-height: 520px; object-fit: contain; background: #04101f; }
 .proof-panel #view-proof { width: 100%; justify-content: center; margin-top: 10px; }
+.proof-display { display: grid; width: 100%; min-height: 360px; padding: 0; place-items: center; overflow: hidden; border: 1px solid rgba(112, 222, 255, .57); border-radius: 8px; background: #04101f; color: #a9d4ea; cursor: zoom-in; font: 12px var(--font-mono); }
+.proof-display:disabled { cursor: default; }
+.proof-display img { display: block; width: 100%; height: 100%; max-height: 520px; object-fit: contain; }
+.proof-display #proof-empty[hidden] { display: none; }
+.proof-hint { margin: 10px 0 0; color: #83cfe7; font: 11px var(--font-mono); text-align: center; }
 .remove-proof { width: 100%; justify-content: center; margin-top: 10px; }
 .task-missing { padding: 50px 0; color: var(--text-muted); }
 .task-missing p { margin: 8px 0 18px; }

@@ -19,33 +19,29 @@
         <p class="desc" id="task-description"></p>
         <span class="lesson-tag" id="task-lesson"></span>
       </div>
-      <form class="submission-form" onsubmit="return false">
+      <div class="submission-form task-detail-grid">
         <section class="submission-panel">
-          <div class="panel-heading"><div><span class="panel-kicker">01</span><h2>Kod</h2></div><span class="panel-note">C# iz Visual Studija</span></div>
-          <label class="sr-only" for="code-input">C# kod</label>
-          <textarea id="code-input" class="code-input" spellcheck="false" placeholder="Nalepi ovde svoj C# kod iz Visual Studija..."></textarea>
-          <div class="panel-actions">
-            <button class="btn primary" type="button" id="save-submission">Sačuvaj izmene</button>
-            <button class="btn" type="button" id="run-test">Proveri kod</button>
-            <button class="btn" type="button" id="download-code">Preuzmi .cs</button>
-          </div>
-          <p class="test-result" id="test-result" aria-live="polite">Dodaj kod, pa pokreni proveru.</p>
+          <div class="panel-heading"><div><span class="panel-kicker">KOD</span><h2>C# rešenje</h2></div></div>
+          <pre class="code-view"><code id="code-view">Učitavanje koda...</code></pre>
         </section>
         <section class="submission-panel proof-panel">
-          <div class="panel-heading"><div><span class="panel-kicker">02</span><h2>Dokaz</h2></div><span class="panel-note">Samo jedna slika</span></div>
-          <label class="proof-dropzone" for="proof-input">
-            <img id="proof-preview" alt="Pregled dokaza" hidden>
-            <span id="proof-empty"><strong>Dodaj screenshot</strong><small>JPG, PNG ili WEBP · do 4 MB</small></span>
-          </label>
-          <input id="proof-input" type="file" accept="image/png,image/jpeg,image/webp" hidden>
-          <button class="btn" type="button" id="view-proof" disabled>Prikaži veću sliku</button>
-          <button class="btn remove-proof" type="button" id="remove-proof">Ukloni sliku</button>
+          <div class="panel-heading"><div><span class="panel-kicker">DOKAZ</span><h2>Screenshot programa</h2></div></div>
+          <button class="proof-display" type="button" id="view-proof" aria-label="Prikaži veću sliku">
+            <img id="proof-preview" alt="Screenshot kao dokaz rada" hidden>
+            <span id="proof-empty">Dokaz za ovaj zadatak još nije dodat.</span>
+          </button>
+          <p class="proof-hint" id="proof-hint" hidden>Klikni na sliku za veći prikaz.</p>
         </section>
-      </form>
-      <p class="submission-status" id="submission-status" aria-live="polite">Sve ostaje u ovom pregledaču dok ne dodaš server za predaju.</p>
+      </div>
     </div>
     <div class="task-missing" id="task-missing" hidden><h1>Zadatak nije pronađen</h1><p>Vrati se na listu i izaberi postojeći zadatak.</p><a class="btn primary" href="assignments.html">Nazad na zadatke</a></div>
   </main>
+  <div class="lightbox" id="lightbox">
+    <div class="lightbox-inner">
+      <div class="lightbox-head"><span id="lightbox-label"></span><button class="lightbox-close" id="lightbox-close" aria-label="Zatvori">×</button></div>
+      <img id="lightbox-img" src="" alt="">
+    </div>
+  </div>
   <script src="assets/js/config.js"></script>
   <script src="assets/js/data-assignments.js"></script>
   <script src="assets/js/render.js"></script>
