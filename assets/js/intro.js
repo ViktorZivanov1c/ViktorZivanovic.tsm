@@ -1,6 +1,6 @@
 /* ==========================================================
    GLASSY OTP INTRO CONTROLLER
-   Builds the V/I/K/T reveal, orbit sequence and approval state.
+   Builds the V/I/K/T/O/R reveal, orbit sequence and approval state.
    ========================================================== */
 
 (() => {
@@ -26,12 +26,19 @@
           </div>
           <h1 class="intro-heading">Dobro <span>došli</span></h1>
           <p class="intro-copy" id="intro-copy">Viktorov školski portfolio</p>
-          <div class="intro-token-stage" aria-label="V I K T">
+          <div class="intro-token-stage" aria-label="V I K T O R">
             <span class="intro-token" data-letter="V">V</span>
             <span class="intro-token" data-letter="I">I</span>
             <span class="intro-token" data-letter="K">K</span>
             <span class="intro-token" data-letter="T">T</span>
-            <span class="intro-success-core" aria-hidden="true">✓</span>
+            <span class="intro-token" data-letter="O">O</span>
+            <span class="intro-token" data-letter="R">R</span>
+            <span class="intro-energy-ring" aria-hidden="true"></span>
+            <span class="intro-success-core" aria-hidden="true">
+              <svg viewBox="0 0 32 32" focusable="false">
+                <path d="M7 16.5 13 22l12-12"></path>
+              </svg>
+            </span>
             <span class="intro-success-ring" aria-hidden="true"></span>
           </div>
           <p class="intro-status" id="intro-status">
@@ -61,31 +68,42 @@
     status.innerHTML = '<span class="intro-status-dot" aria-hidden="true"></span>Pristup je bezbedno odobren';
   }
 
-  async function revealLetters(tokens, reducedMotion) {
+  async function revealLetters(intro, tokens, reducedMotion) {
     for (const token of tokens) {
+      if (intro.classList.contains("is-verifying") || intro.classList.contains("is-leaving")) {
+        return;
+      }
       token.classList.add("is-typed", "is-active");
-      await wait(reducedMotion ? 0 : 260);
+      await wait(reducedMotion ? 0 : 190);
       token.classList.remove("is-active");
     }
   }
 
   async function runVerification(intro, elements, reducedMotion) {
-    const { enterButton, heading, copy, status } = elements;
+    const { enterButton, heading, copy, status, tokens } = elements;
 
     enterButton.disabled = true;
+    tokens.forEach((token) => {
+      token.classList.add("is-typed");
+      token.classList.remove("is-active");
+    });
     intro.classList.add("is-verifying");
 
-    await wait(reducedMotion ? 0 : 500);
+    await wait(reducedMotion ? 0 : 480);
+    if (intro.classList.contains("is-leaving")) return;
     intro.classList.add("is-orbiting");
 
-    await wait(reducedMotion ? 0 : 1900);
+    await wait(reducedMotion ? 0 : 2250);
+    if (intro.classList.contains("is-leaving")) return;
     intro.classList.add("is-merging");
 
-    await wait(reducedMotion ? 0 : 520);
+    await wait(reducedMotion ? 0 : 570);
+    if (intro.classList.contains("is-leaving")) return;
     intro.classList.add("is-success");
     setSuccessCopy(heading, copy, status);
 
-    await wait(reducedMotion ? 0 : 1150);
+    await wait(reducedMotion ? 0 : 1450);
+    if (intro.classList.contains("is-leaving")) return;
     intro.classList.add("is-leaving");
 
     await wait(reducedMotion ? 0 : 720);
@@ -132,8 +150,6 @@
     };
 
     document.body.classList.add("intro-active");
-    await revealLetters(elements.tokens, reducedMotion);
-
     elements.enterButton.addEventListener("click", () => {
       runVerification(intro, elements, reducedMotion);
     }, { once: true });
@@ -143,10 +159,12 @@
     }, { once: true });
 
     document.addEventListener("keydown", (event) => {
-      if (event.key === "Escape") {
+      if (event.key === "Escape" && !intro.hidden) {
         skipIntro(intro, reducedMotion);
       }
-    }, { once: true });
+    });
+
+    revealLetters(intro, elements.tokens, reducedMotion);
   }
 
   document.addEventListener("DOMContentLoaded", initializeIntro);

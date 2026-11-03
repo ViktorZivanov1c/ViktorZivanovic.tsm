@@ -191,11 +191,11 @@
 .intro-token-stage {
   position: relative;
   display: flex;
-  width: 236px;
-  height: 74px;
+  width: min(100%, 332px);
+  height: 86px;
   align-items: center;
   justify-content: center;
-  gap: 10px;
+  gap: clamp(5px, 1.5vw, 9px);
   margin: 30px auto 20px;
 }
 
@@ -203,6 +203,9 @@
   position: relative;
   display: grid;
   width: 48px;
+  min-width: 0;
+  flex: 1 1 0;
+  max-width: 48px;
   height: 54px;
   place-items: center;
   border: 1px solid rgba(255, 209, 92, 0.55);
@@ -246,10 +249,38 @@
 }
 
 .intro-success-core,
-.intro-success-ring {
+.intro-success-ring,
+.intro-energy-ring {
   position: absolute;
   opacity: 0;
   pointer-events: none;
+}
+
+.intro-energy-ring {
+  width: 158px;
+  height: 158px;
+  border: 1px solid rgba(255, 216, 74, 0.45);
+  border-radius: 50%;
+  box-shadow:
+    0 0 25px rgba(255, 191, 55, 0.35),
+    inset 0 0 25px rgba(255, 191, 55, 0.18),
+    0 0 0 16px rgba(255, 185, 58, 0.035);
+  transform: scale(0.5);
+}
+
+.intro-energy-ring::before,
+.intro-energy-ring::after {
+  position: absolute;
+  inset: -11px;
+  content: "";
+  border: 1px dashed rgba(255, 216, 100, 0.45);
+  border-radius: 50%;
+}
+
+.intro-energy-ring::after {
+  inset: 15px;
+  border-style: solid;
+  border-color: rgba(255, 245, 194, 0.3);
 }
 
 .intro-success-core {
@@ -262,9 +293,21 @@
   background: linear-gradient(145deg, var(--color-success-light), var(--color-success));
   box-shadow: 0 0 28px rgba(34, 197, 94, 0.65);
   color: white;
-  font-size: 27px;
-  font-weight: 800;
   transform: scale(0.2) rotate(-45deg);
+}
+
+.intro-success-core svg {
+  width: 31px;
+  fill: none;
+  stroke: white;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 3;
+}
+
+.intro-success-core path {
+  stroke-dasharray: 32;
+  stroke-dashoffset: 32;
 }
 
 .intro-success-ring {
@@ -348,6 +391,18 @@
   pointer-events: none;
 }
 
+.site-intro.is-verifying .intro-card {
+  border-color: rgba(255, 214, 104, 0.5);
+  box-shadow:
+    0 28px 86px rgba(0, 0, 0, 0.57),
+    0 0 70px rgba(245, 174, 42, 0.22),
+    inset 0 0 45px rgba(255, 191, 55, 0.07);
+}
+
+.site-intro.is-verifying .intro-card::after {
+  animation: intro-glass-sweep 1.1s var(--ease-out) forwards;
+}
+
 .site-intro.is-verifying .intro-button-spinner {
   display: inline-block;
   animation: intro-spin 0.75s linear infinite;
@@ -363,12 +418,19 @@
 }
 
 .site-intro.is-orbiting .intro-token-stage {
-  animation: intro-stage-rotate 1.7s cubic-bezier(0.48, 0.01, 0.55, 1) both;
+  animation: intro-stage-rotate 2.05s cubic-bezier(0.52, 0.02, 0.32, 1) both;
 }
 
 .site-intro.is-orbiting .intro-token {
   position: absolute;
-  transition: transform 0.7s var(--ease-out);
+  width: 45px;
+  height: 50px;
+  border-color: rgba(255, 217, 111, 0.9);
+  box-shadow:
+    inset 0 1px 8px rgba(255, 220, 124, 0.18),
+    0 0 18px rgba(255, 185, 58, 0.48),
+    0 0 38px rgba(217, 116, 58, 0.22);
+  transition: transform 0.65s var(--ease-out), opacity 0.35s ease;
 }
 
 .site-intro.is-orbiting .intro-token::after {
@@ -376,24 +438,42 @@
 }
 
 .site-intro.is-orbiting .intro-token:nth-child(1) {
-  transform: translate(0, -52px) rotate(45deg);
+  transform: translate(0, -62px) rotate(0deg);
 }
 
 .site-intro.is-orbiting .intro-token:nth-child(2) {
-  transform: translate(67px, 0) rotate(135deg);
+  transform: translate(55px, -31px) rotate(60deg);
 }
 
 .site-intro.is-orbiting .intro-token:nth-child(3) {
-  transform: translate(0, 52px) rotate(225deg);
+  transform: translate(55px, 31px) rotate(120deg);
 }
 
 .site-intro.is-orbiting .intro-token:nth-child(4) {
-  transform: translate(-67px, 0) rotate(315deg);
+  transform: translate(0, 62px) rotate(180deg);
+}
+
+.site-intro.is-orbiting .intro-token:nth-child(5) {
+  transform: translate(-55px, 31px) rotate(240deg);
+}
+
+.site-intro.is-orbiting .intro-token:nth-child(6) {
+  transform: translate(-55px, -31px) rotate(300deg);
+}
+
+.site-intro.is-orbiting .intro-energy-ring {
+  opacity: 1;
+  animation: intro-energy-pulse 1.05s ease-in-out infinite alternate;
 }
 
 .site-intro.is-merging .intro-token {
   transform: translate(0, 0) scale(0.14) rotate(540deg) !important;
   opacity: 0;
+}
+
+.site-intro.is-merging .intro-energy-ring {
+  opacity: 0;
+  animation: intro-energy-collapse 0.55s var(--ease-out) forwards;
 }
 
 .site-intro.is-success .intro-card {
@@ -434,7 +514,16 @@
 
 .site-intro.is-success .intro-success-ring {
   opacity: 1;
-  animation: intro-ring-spin 2.2s linear infinite;
+  animation: intro-success-burst 0.7s var(--ease-out) both;
+}
+
+.site-intro.is-success .intro-success-core path {
+  animation: intro-check-draw 0.5s 0.2s ease forwards;
+}
+
+.site-intro.is-success .intro-button-spinner,
+.site-intro.is-success .intro-button-arrow {
+  display: none;
 }
 
 .site-intro.is-success .intro-success-core {
@@ -481,9 +570,43 @@
   }
 }
 
-@keyframes intro-ring-spin {
+@keyframes intro-energy-pulse {
+  from {
+    transform: scale(0.88);
+  }
+
   to {
-    transform: rotate(360deg);
+    transform: scale(1.08);
+  }
+}
+
+@keyframes intro-energy-collapse {
+  from {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  to {
+    opacity: 0;
+    transform: scale(0.08);
+  }
+}
+
+@keyframes intro-success-burst {
+  from {
+    opacity: 0;
+    transform: scale(0.3);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes intro-check-draw {
+  to {
+    stroke-dashoffset: 0;
   }
 }
 
@@ -504,12 +627,13 @@
   }
 
   .intro-token-stage {
-    width: 214px;
-    gap: 8px;
+    width: min(100%, 300px);
+    gap: 6px;
   }
 
   .intro-token {
     width: 44px;
+    max-width: 44px;
     height: 51px;
   }
 }
@@ -517,9 +641,16 @@
 @media (prefers-reduced-motion: reduce) {
   .intro-ribbon,
   .intro-token,
+  .intro-token-stage,
+  .intro-energy-ring,
   .intro-success-ring,
-  .intro-card {
+  .intro-card,
+  .intro-success-core path {
     animation: none !important;
     transition-duration: 0.001ms !important;
+  }
+
+  .intro-success-core path {
+    stroke-dashoffset: 0;
   }
 }
