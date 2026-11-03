@@ -102,7 +102,8 @@
     intro.classList.add("is-success");
     setSuccessCopy(heading, copy, status);
 
-    await wait(reducedMotion ? 0 : 1450);
+    // Keep the green "approved" state visible long enough to register.
+    await wait(reducedMotion ? 0 : 2450);
     if (intro.classList.contains("is-leaving")) return;
     intro.classList.add("is-leaving");
 

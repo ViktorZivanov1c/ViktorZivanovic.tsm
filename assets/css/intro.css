@@ -26,8 +26,24 @@
 .site-intro.is-leaving {
   opacity: 0;
   visibility: hidden;
-  transform: scale(1.06);
+  transform: scale(1.035);
   pointer-events: none;
+}
+
+.site-intro.is-leaving .intro-shell {
+  animation: intro-card-exit 0.62s var(--ease-out) both;
+}
+
+/* The page beneath the intro arrives with the same soft motion as the exit. */
+.topbar,
+.shell {
+  transition: opacity 0.58s var(--ease-out), transform 0.58s var(--ease-out);
+}
+
+body.intro-active .topbar,
+body.intro-active .shell {
+  opacity: 0;
+  transform: translateY(18px) scale(0.985);
 }
 
 .intro-ribbon {
@@ -86,8 +102,8 @@
 .intro-card {
   position: relative;
   overflow: hidden;
-  min-height: 430px;
-  padding: 42px 34px 32px;
+  min-height: 0;
+  padding: 30px 34px 26px;
   border: 1px solid rgba(255, 255, 255, 0.17);
   border-radius: 23px;
   background:
@@ -149,7 +165,7 @@
   display: grid;
   width: 56px;
   height: 56px;
-  margin: 0 auto 18px;
+  margin: 0 auto 12px;
   place-items: center;
   border: 1px solid rgba(255, 221, 121, 0.6);
   border-radius: 17px;
@@ -183,7 +199,7 @@
 }
 
 .intro-copy {
-  margin-top: 8px;
+  margin-top: 6px;
   color: #a8a39a;
   font-size: 12px;
 }
@@ -192,11 +208,12 @@
   position: relative;
   display: flex;
   width: min(100%, 332px);
-  height: 86px;
+  /* The orbit needs its own room so it never crosses the heading or status. */
+  height: 158px;
   align-items: center;
   justify-content: center;
   gap: clamp(5px, 1.5vw, 9px);
-  margin: 30px auto 20px;
+  margin: 14px auto 12px;
 }
 
 .intro-token {
@@ -616,14 +633,25 @@
   }
 }
 
+@keyframes intro-card-exit {
+  from {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+
+  to {
+    opacity: 0;
+    transform: translateY(-18px) scale(0.94);
+  }
+}
+
 @media (max-width: 480px) {
   .site-intro {
     padding: 17px;
   }
 
   .intro-card {
-    min-height: 408px;
-    padding: 34px 20px 25px;
+    padding: 26px 20px 23px;
   }
 
   .intro-token-stage {
@@ -635,6 +663,11 @@
     width: 44px;
     max-width: 44px;
     height: 51px;
+  }
+
+  .intro-token-stage {
+    height: 150px;
+    margin-top: 12px;
   }
 }
 
