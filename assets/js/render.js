@@ -638,6 +638,43 @@ function initPageTransitions() {
   });
 }
 
+/* ---- Lightweight progressive reveals and number counters ---- */
+function initMotionDetails() {
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  const targets = document.querySelectorAll(".page-head, .welcome-card, .recent-work, .card, .notice, .submission-panel");
+  const observer = new IntersectionObserver((entries, currentObserver) => {
+    entries.forEach((entry) => {
+      if (!entry.isIntersecting) return;
+      entry.target.classList.add("is-revealed");
+      currentObserver.unobserve(entry.target);
+    });
+  }, { threshold: 0.08 });
+  targets.forEach((target, index) => {
+    target.classList.add("reveal-on-scroll");
+    target.style.setProperty("--reveal-delay", `${Math.min(index % 4, 3) * 55}ms`);
+    observer.observe(target);
+  });
+
+  document.querySelectorAll("#assignments-count, #homework-count, .stat .num").forEach((element) => {
+    const target = Number.parseInt(element.textContent, 10);
+    if (!Number.isFinite(target) || target < 1) return;
+    element.textContent = "0";
+    const counterObserver = new IntersectionObserver((entries, currentObserver) => {
+      if (!entries[0].isIntersecting) return;
+      const started = performance.now();
+      const duration = 700;
+      const update = (now) => {
+        const progress = Math.min((now - started) / duration, 1);
+        element.textContent = String(Math.round(target * (1 - Math.pow(1 - progress, 3))));
+        if (progress < 1) requestAnimationFrame(update);
+      };
+      requestAnimationFrame(update);
+      currentObserver.disconnect();
+    }, { threshold: 0.7 });
+    counterObserver.observe(element);
+  });
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   applyConfig();
   initMobileNav();
@@ -653,6 +690,7 @@ document.addEventListener("DOMContentLoaded", () => {
   initElectricTraces();
   initCustomCursor();
   initPageTransitions();
+  initMotionDetails();
   window.addEventListener("resize", () => {
     document.querySelectorAll(".electric-trace").forEach(syncElectricTrace);
   });

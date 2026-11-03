@@ -1,47 +1,60 @@
 (() => {
+  "use strict";
   if (!document.body.classList.contains("app-page") || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
   const canvas = document.createElement("canvas");
   canvas.className = "matrix-rain";
   canvas.setAttribute("aria-hidden", "true");
-  document.body.append(canvas);
-
-  const ctx = canvas.getContext("2d");
-  const glyphs = "01{}[]<>/\\\\+=*";
-  const size = 15;
+  document.body.prepend(canvas);
+  const ctx = canvas.getContext("2d", { alpha: true });
+  const glyphs = "01{}[]<>/\\\\+=*#;";
   let columns = [];
+  let rafId = 0;
+  let lastFrame = 0;
+  let width = 0;
+  let height = 0;
+  let unit = 18;
 
   function resize() {
-    const pixelRatio = Math.min(window.devicePixelRatio || 1, 2);
-    canvas.width = window.innerWidth * pixelRatio;
-    canvas.height = window.innerHeight * pixelRatio;
-    canvas.style.width = `${window.innerWidth}px`;
-    canvas.style.height = `${window.innerHeight}px`;
-    ctx.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
-    const count = Math.ceil(window.innerWidth / size);
-    columns = Array.from({ length: count }, (_, i) => ({
-      x: i * size,
-      y: Math.random() * window.innerHeight,
-      speed: 0.01 + Math.random() * 0.015
+    const ratio = Math.min(window.devicePixelRatio || 1, 1.5);
+    width = window.innerWidth;
+    height = window.innerHeight;
+    unit = width < 640 ? 28 : 22;
+    canvas.width = Math.floor(width * ratio);
+    canvas.height = Math.floor(height * ratio);
+    canvas.style.width = `${width}px`;
+    canvas.style.height = `${height}px`;
+    ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
+    const count = Math.ceil(width / unit);
+    columns = Array.from({ length: count }, (_, index) => ({
+      x: index * unit,
+      y: Math.random() * height,
+      speed: 0.34 + Math.random() * 0.38
     }));
   }
 
-  function draw() {
-    ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
+  function draw(timestamp) {
+    if (document.hidden) return;
+    if (timestamp - lastFrame < 42) { rafId = requestAnimationFrame(draw); return; }
+    lastFrame = timestamp;
+    ctx.clearRect(0, 0, width, height);
     ctx.font = `10px ${getComputedStyle(document.documentElement).getPropertyValue("--font-mono")}`;
     columns.forEach((column) => {
-      for (let trail = 6; trail >= 0; trail--) {
-        const alpha = 0.06 + (6 - trail) * 0.055;
-        ctx.fillStyle = `rgba(76, 133, 255, ${alpha})`;
-        ctx.fillText(glyphs[Math.floor(Math.random() * glyphs.length)], column.x, column.y - trail * size);
-      }
-      column.y += size * column.speed;
-      if (column.y > window.innerHeight + size * 7) column.y = -Math.random() * window.innerHeight * 0.3;
+      ctx.fillStyle = "rgba(55, 242, 255, .12)";
+      ctx.fillText(glyphs[(Math.random() * glyphs.length) | 0], column.x, column.y);
+      ctx.fillStyle = "rgba(142, 110, 255, .055)";
+      ctx.fillText(glyphs[(Math.random() * glyphs.length) | 0], column.x, column.y - unit);
+      column.y += unit * column.speed;
+      if (column.y > height + unit) column.y = -unit * (1 + Math.random() * 16);
     });
-    requestAnimationFrame(draw);
+    rafId = requestAnimationFrame(draw);
   }
 
+  document.addEventListener("visibilitychange", () => {
+    if (document.hidden) cancelAnimationFrame(rafId);
+    else { lastFrame = 0; rafId = requestAnimationFrame(draw); }
+  });
+  window.addEventListener("resize", resize, { passive: true });
   resize();
-  window.addEventListener("resize", resize);
-  requestAnimationFrame(draw);
+  rafId = requestAnimationFrame(draw);
 })();
