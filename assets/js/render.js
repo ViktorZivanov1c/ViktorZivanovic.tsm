@@ -261,7 +261,7 @@ function initElectricTraces() {
     distortion.setAttribute("result", "distorted");
     glow.setAttribute("in", "distorted");
     glow.setAttribute("stdDeviation", "1.2");
-    glow.setAttribute("flood-color", "#46a0ff");
+    glow.setAttribute("flood-color", "#f0b62d");
     glow.setAttribute("flood-opacity", "0.95");
     filter.append(noise, distortion, glow);
     defs.appendChild(filter);
@@ -378,45 +378,59 @@ function addMaxwell() {
 /* ---- Search + tech filter (used on assignments & homework pages) ---- */
 function initToolbar(gridEl, items) {
   const search = document.getElementById("search-input");
-  const filterWrap = document.getElementById("filter-chips");
-  if (!search && !filterWrap) return;
+  let filterWrap = document.getElementById("filter-chips");
+  if (!search) return;
+  if (!filterWrap) {
+    filterWrap = document.createElement("div");
+    filterWrap.className = "filter-chips";
+    filterWrap.id = "filter-chips";
+    document.querySelector(".toolbar")?.insertAdjacentElement("afterend", filterWrap);
+  }
 
   const allTech = [...new Set(items.flatMap((i) => i.technologies || []))].sort();
-  let activeTech = null;
+  let activeFilter = "all";
+  let shown = 9;
+  const loadMore = document.createElement("div");
+  loadMore.className = "load-more";
+  loadMore.innerHTML = '<button class="btn" type="button">Prikaži još zadataka</button>';
+  gridEl.insertAdjacentElement("afterend", loadMore);
 
-  if (filterWrap) {
-    filterWrap.innerHTML =
-      `<button class="filter-chip active" data-tech="">All</button>` +
-      allTech.map((t) => `<button class="filter-chip" data-tech="${escapeHtml(t)}">${escapeHtml(t)}</button>`).join("");
+  filterWrap.innerHTML =
+    '<button class="filter-chip active" data-filter="all">Sve</button>' +
+    '<button class="filter-chip" data-filter="ready">Dostupno</button>' +
+    '<button class="filter-chip" data-filter="pending">Uskoro</button>' +
+    allTech.map((t) => `<button class="filter-chip" data-filter="tech:${escapeHtml(t)}">${escapeHtml(t)}</button>`).join("");
 
     filterWrap.querySelectorAll(".filter-chip").forEach((chip) => {
       chip.addEventListener("click", () => {
         filterWrap.querySelectorAll(".filter-chip").forEach((c) => c.classList.remove("active"));
         chip.classList.add("active");
-        activeTech = chip.getAttribute("data-tech") || null;
+        activeFilter = chip.dataset.filter || "all";
+        shown = 9;
         applyFilter();
       });
     });
-  }
-
   function applyFilter() {
     const q = (search?.value || "").trim().toLowerCase();
-    let visible = 0;
-    gridEl.querySelectorAll(".card").forEach((card) => {
+    const matching = [...gridEl.querySelectorAll(".card")].filter((card) => {
       const title = (card.getAttribute("data-title") || "").toLowerCase();
       const tech = (card.getAttribute("data-tech") || "");
       const techList = tech.split(",").map((t) => t.trim());
       const matchesQuery = !q || title.includes(q);
-      const matchesTech = !activeTech || techList.includes(activeTech);
-      const show = matchesQuery && matchesTech;
-      card.style.display = show ? "" : "none";
-      if (show) visible++;
+      const state = card.querySelector(".card-state")?.classList.contains("is-ready") ? "ready" : "pending";
+      const matchesFilter = activeFilter === "all" || activeFilter === state || (activeFilter.startsWith("tech:") && techList.includes(activeFilter.slice(5)));
+      return matchesQuery && matchesFilter;
     });
+    gridEl.querySelectorAll(".card").forEach((card) => { card.style.display = "none"; card.classList.remove("is-pagination-hidden"); });
+    matching.forEach((card, index) => { card.style.display = ""; card.classList.toggle("is-pagination-hidden", index >= shown); });
     const empty = document.getElementById("empty-state");
-    if (empty) empty.style.display = visible === 0 ? "" : "none";
+    if (empty) empty.style.display = matching.length === 0 ? "" : "none";
+    loadMore.hidden = matching.length <= shown;
   }
 
-  if (search) search.addEventListener("input", applyFilter);
+  loadMore.querySelector("button").addEventListener("click", () => { shown += 9; applyFilter(); });
+  search.addEventListener("input", () => { shown = 9; applyFilter(); });
+  applyFilter();
 }
 
 /* ---- Page entry points ---- */

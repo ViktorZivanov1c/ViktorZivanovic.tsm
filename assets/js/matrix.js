@@ -38,7 +38,7 @@
     if (timestamp - lastFrame < 42) { rafId = requestAnimationFrame(draw); return; }
     lastFrame = timestamp;
     ctx.clearRect(0, 0, width, height);
-    ctx.font = `10px ${getComputedStyle(document.documentElement).getPropertyValue("--font-mono")}`;
+    ctx.font = `10px ${getComputedStyle(document.documentElement).getPropertyValue("--mono")}`;
     columns.forEach((column) => {
       ctx.fillStyle = "rgba(255, 207, 69, .12)";
       ctx.fillText(glyphs[(Math.random() * glyphs.length) | 0], column.x, column.y);
