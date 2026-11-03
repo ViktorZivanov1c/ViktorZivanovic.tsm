@@ -230,7 +230,8 @@ function addMaxwell() {
   homeButton.type = "button";
   homeButton.className = "btn maxwell-home";
   homeButton.innerHTML = 'Maxwell go home! <span class="maxwell-paw" aria-hidden="true">🐾</span>';
-  widget.append(homeSlot, maxwell, homeButton);
+  homeSlot.appendChild(maxwell);
+  widget.append(homeSlot, homeButton);
 
   const sidebar = document.querySelector(".sidebar");
   const footer = sidebar?.querySelector(".sidebar-footer");
@@ -246,25 +247,40 @@ function addMaxwell() {
     const from = maxwell.getBoundingClientRect();
     const destination = homeSlot.getBoundingClientRect();
     maxwell.classList.remove("is-dragging");
+    const finishReturn = () => {
+      if (returnAnimation) {
+        returnAnimation.cancel();
+        returnAnimation = null;
+      }
+      maxwell.classList.remove("is-free", "is-dragging");
+      maxwell.style.removeProperty("left");
+      maxwell.style.removeProperty("top");
+      homeSlot.appendChild(maxwell);
+      widget.classList.remove("is-maxwell-away");
+    };
+
+    if (!destination.width || !destination.height || window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      finishReturn();
+      return;
+    }
+
+    const targetLeft = destination.left + (destination.width - from.width) / 2;
+    const targetTop = destination.top + (destination.height - from.height) / 2;
     const animation = maxwell.animate(
       [
         { left: `${from.left}px`, top: `${from.top}px` },
-        { left: `${destination.left}px`, top: `${destination.top}px` }
+        { left: `${targetLeft}px`, top: `${targetTop}px` }
       ],
       { duration: 700, easing: "cubic-bezier(0.22, 1, 0.36, 1)", fill: "forwards" }
     );
     returnAnimation = animation;
-    const finishReturn = () => {
-      if (returnAnimation !== animation) return;
-      animation.cancel();
-      maxwell.classList.remove("is-free");
-      maxwell.style.removeProperty("left");
-      maxwell.style.removeProperty("top");
-      widget.classList.remove("is-maxwell-away");
-      returnAnimation = null;
+    const finishCurrentAnimation = () => {
+      if (returnAnimation === animation) {
+        finishReturn();
+      }
     };
-    animation.onfinish = finishReturn;
-    window.setTimeout(finishReturn, 750);
+    animation.onfinish = finishCurrentAnimation;
+    window.setTimeout(finishCurrentAnimation, 750);
   }
 
   let dragOffsetX = 0;
@@ -274,6 +290,7 @@ function addMaxwell() {
 
   maxwell.addEventListener("pointerdown", (event) => {
     if (event.button !== 0) return;
+    event.preventDefault();
     if (returnAnimation) {
       returnAnimation.cancel();
       returnAnimation = null;
@@ -282,6 +299,7 @@ function addMaxwell() {
     widget.classList.add("is-maxwell-away");
     dragOffsetX = event.clientX - bounds.left;
     dragOffsetY = event.clientY - bounds.top;
+    document.body.appendChild(maxwell);
     maxwell.classList.add("is-free", "is-dragging");
     maxwell.style.left = `${bounds.left}px`;
     maxwell.style.top = `${bounds.top}px`;
@@ -293,8 +311,10 @@ function addMaxwell() {
     if (!dragging) return;
     const width = maxwell.offsetWidth;
     const height = maxwell.offsetHeight;
-    const left = Math.min(Math.max(8, event.clientX - dragOffsetX), window.innerWidth - width - 8);
-    const top = Math.min(Math.max(8, event.clientY - dragOffsetY), window.innerHeight - height - 8);
+    const maxLeft = Math.max(0, window.innerWidth - width);
+    const maxTop = Math.max(0, window.innerHeight - height);
+    const left = Math.min(Math.max(0, event.clientX - dragOffsetX), maxLeft);
+    const top = Math.min(Math.max(0, event.clientY - dragOffsetY), maxTop);
     maxwell.style.left = `${left}px`;
     maxwell.style.top = `${top}px`;
   });
