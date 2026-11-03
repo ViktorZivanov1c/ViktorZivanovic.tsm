@@ -144,7 +144,12 @@ function assignmentCardHTML(a) {
         <span class="placeholder-label">zadatak</span>
       </div>`;
   return `
-    <article class="card" data-title="${escapeHtml(a.title)}" data-tech="${escapeHtml((a.technologies || []).join(","))}">
+    <article
+      class="card"
+      data-title="${escapeHtml(a.title)}"
+      data-tech="${escapeHtml((a.technologies || []).join(","))}"
+      data-state="${isReady ? "ready" : "pending"}"
+    >
       ${preview}
       <div class="card-body">
         <div class="card-top">
@@ -174,7 +179,12 @@ function homeworkCardHTML(h) {
         <span class="placeholder-label">domaci</span>
       </div>`;
   return `
-    <article class="card" data-title="${escapeHtml(h.title)}" data-tech="${escapeHtml((h.technologies || []).join(","))}">
+    <article
+      class="card"
+      data-title="${escapeHtml(h.title)}"
+      data-tech="${escapeHtml((h.technologies || []).join(","))}"
+      data-state="${h.zip || h.screenshot ? "ready" : "pending"}"
+    >
       ${preview}
       <div class="card-body">
         <div class="card-top">
@@ -200,80 +210,6 @@ function wireThumbs(container) {
       const title = btn.getAttribute("data-title");
       if (src && window.__openLightbox) window.__openLightbox(src, title);
     });
-  });
-}
-
-/* ---- Hover electricity: a short spark moving along the element outline ---- */
-function syncElectricTrace(trace) {
-  const target = trace.parentElement;
-  const paths = trace.querySelectorAll("rect");
-  if (!target || !paths.length) return;
-
-  const width = target.clientWidth;
-  const height = target.clientHeight;
-  if (!width || !height) return;
-
-  const radius = Math.max(3, parseFloat(getComputedStyle(target).borderTopLeftRadius) || 0);
-  trace.setAttribute("viewBox", `0 0 ${width} ${height}`);
-  paths.forEach((path) => {
-    path.setAttribute("x", "0.75");
-    path.setAttribute("y", "0.75");
-    path.setAttribute("width", String(width - 1.5));
-    path.setAttribute("height", String(height - 1.5));
-    path.setAttribute("rx", String(radius));
-    path.setAttribute("ry", String(radius));
-  });
-}
-
-let electricTraceIndex = 0;
-
-function initElectricTraces() {
-  document.querySelectorAll(".card, .recent-work-card, .btn, .side-nav a, .filter-chip, .sidebar-footer a").forEach((target) => {
-    if ([...target.children].some((child) => child.classList.contains("electric-trace"))) return;
-
-    const ns = "http://www.w3.org/2000/svg";
-    const trace = document.createElementNS(ns, "svg");
-    const defs = document.createElementNS(ns, "defs");
-    const filter = document.createElementNS(ns, "filter");
-    const noise = document.createElementNS(ns, "feTurbulence");
-    const distortion = document.createElementNS(ns, "feDisplacementMap");
-    const glow = document.createElementNS(ns, "feDropShadow");
-    const rail = document.createElementNS(ns, "rect");
-    const spark = document.createElementNS(ns, "rect");
-    const filterId = `electric-spark-${electricTraceIndex++}`;
-
-    trace.classList.add("electric-trace");
-    trace.setAttribute("aria-hidden", "true");
-    trace.setAttribute("preserveAspectRatio", "none");
-    filter.setAttribute("id", filterId);
-    filter.setAttribute("x", "-15%");
-    filter.setAttribute("y", "-15%");
-    filter.setAttribute("width", "130%");
-    filter.setAttribute("height", "130%");
-    noise.setAttribute("type", "fractalNoise");
-    noise.setAttribute("baseFrequency", "0.025 0.42");
-    noise.setAttribute("numOctaves", "1");
-    noise.setAttribute("seed", String(electricTraceIndex));
-    noise.setAttribute("result", "noise");
-    distortion.setAttribute("in", "SourceGraphic");
-    distortion.setAttribute("in2", "noise");
-    distortion.setAttribute("scale", "1.4");
-    distortion.setAttribute("result", "distorted");
-    glow.setAttribute("in", "distorted");
-    glow.setAttribute("stdDeviation", "1.2");
-    glow.setAttribute("flood-color", "#f0b62d");
-    glow.setAttribute("flood-opacity", "0.95");
-    filter.append(noise, distortion, glow);
-    defs.appendChild(filter);
-    rail.classList.add("trace-rail");
-    rail.setAttribute("pathLength", "100");
-    spark.classList.add("trace-spark");
-    spark.setAttribute("pathLength", "100");
-    spark.style.filter = `url(#${filterId})`;
-
-    trace.append(defs, rail, spark);
-    target.appendChild(trace);
-    syncElectricTrace(trace);
   });
 }
 
@@ -417,7 +353,7 @@ function initToolbar(gridEl, items) {
       const tech = (card.getAttribute("data-tech") || "");
       const techList = tech.split(",").map((t) => t.trim());
       const matchesQuery = !q || title.includes(q);
-      const state = card.querySelector(".card-state")?.classList.contains("is-ready") ? "ready" : "pending";
+      const state = card.dataset.state || "pending";
       const matchesFilter = activeFilter === "all" || activeFilter === state || (activeFilter.startsWith("tech:") && techList.includes(activeFilter.slice(5)));
       return matchesQuery && matchesFilter;
     });
@@ -605,27 +541,6 @@ function renderDailyQuote() {
   quote.textContent = `“${selectedQuote}”`;
 }
 
-/* ---- Desktop cursor: compact Windows-style pointer for precise pointers only ---- */
-function initCustomCursor() {
-  const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)");
-  if (!finePointer.matches || document.querySelector(".custom-cursor")) return;
-
-  const cursor = document.createElement("div");
-  cursor.className = "custom-cursor";
-  cursor.setAttribute("aria-hidden", "true");
-  document.body.appendChild(cursor);
-  document.body.classList.add("custom-cursor-enabled");
-
-  document.addEventListener("pointermove", (event) => {
-    cursor.style.setProperty("--cursor-x", `${event.clientX}px`);
-    cursor.style.setProperty("--cursor-y", `${event.clientY}px`);
-    cursor.classList.add("is-visible");
-    cursor.classList.toggle("is-hovering", Boolean(event.target.closest("a, button, input, select, textarea, label, .card, .recent-work-card, .filter-chip")));
-  });
-
-  document.addEventListener("pointerleave", () => cursor.classList.remove("is-visible"));
-}
-
 /* ---- Internal pages transition through a short neon fade ---- */
 function initPageTransitions() {
   const transition = document.createElement("div");
@@ -703,11 +618,6 @@ document.addEventListener("DOMContentLoaded", () => {
   initLiveClock();
   renderDailyQuote();
   addMaxwell();
-  initElectricTraces();
-  initCustomCursor();
   initPageTransitions();
   initMotionDetails();
-  window.addEventListener("resize", () => {
-    document.querySelectorAll(".electric-trace").forEach(syncElectricTrace);
-  });
 });
