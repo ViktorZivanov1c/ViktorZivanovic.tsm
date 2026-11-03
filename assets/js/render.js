@@ -134,6 +134,7 @@ function initLightbox() {
 /* ---- Card builders ---- */
 function assignmentCardHTML(a) {
   const shot = (a.screenshots && a.screenshots[0]) || "";
+  const isReady = Boolean(a.codeFile || shot);
   const preview = shot
     ? `<button class="thumb" type="button" data-src="${escapeHtml(shot)}" data-title="Assignment ${a.number} — ${escapeHtml(a.title)}" aria-label="View screenshot for ${escapeHtml(a.title)}">
         <img src="${escapeHtml(shot)}" alt="Screenshot for ${escapeHtml(a.title)}" loading="lazy">
@@ -148,11 +149,11 @@ function assignmentCardHTML(a) {
       <div class="card-body">
         <div class="card-top">
           <span class="badge">#${a.number}</span>
-          <span class="date">${formatDate(a.date)}</span>
+          <span class="card-state ${isReady ? "is-ready" : "is-pending"}">${isReady ? "Dostupno" : "Uskoro"}</span>
         </div>
         <h3>${escapeHtml(a.title)}</h3>
         <span class="lesson-tag">Cas ${a.lesson}</span>
-        <p class="desc">${escapeHtml(a.description)}</p>
+        <p class="desc">${escapeHtml(isReady ? a.description : "Materijal za ovaj zadatak se dodaje uskoro.")}</p>
         <div class="card-tags">
           ${(a.technologies || []).map((t) => `<span class="chip">${escapeHtml(t)}</span>`).join("")}
         </div>
@@ -499,7 +500,8 @@ function renderRecentWork() {
   const grid = document.getElementById("recent-work-grid");
   if (!grid || typeof ASSIGNMENTS === "undefined") return;
 
-  const latest = ASSIGNMENTS.slice()
+  const finishedAssignments = ASSIGNMENTS.filter((assignment) => assignment.codeFile || assignment.screenshots?.length);
+  const latest = (finishedAssignments.length ? finishedAssignments : ASSIGNMENTS).slice()
     .sort((a, b) => new Date(b.date) - new Date(a.date) || b.number - a.number)
     .slice(0, 3);
   grid.innerHTML = latest.length

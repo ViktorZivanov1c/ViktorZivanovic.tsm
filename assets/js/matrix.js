@@ -40,9 +40,9 @@
     ctx.clearRect(0, 0, width, height);
     ctx.font = `10px ${getComputedStyle(document.documentElement).getPropertyValue("--font-mono")}`;
     columns.forEach((column) => {
-      ctx.fillStyle = "rgba(55, 242, 255, .12)";
+      ctx.fillStyle = "rgba(255, 207, 69, .12)";
       ctx.fillText(glyphs[(Math.random() * glyphs.length) | 0], column.x, column.y);
-      ctx.fillStyle = "rgba(142, 110, 255, .055)";
+      ctx.fillStyle = "rgba(255, 173, 61, .055)";
       ctx.fillText(glyphs[(Math.random() * glyphs.length) | 0], column.x, column.y - unit);
       column.y += unit * column.speed;
       if (column.y > height + unit) column.y = -unit * (1 + Math.random() * 16);
