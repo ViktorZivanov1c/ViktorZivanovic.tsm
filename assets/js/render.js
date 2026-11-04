@@ -113,20 +113,42 @@ function initLightbox() {
   const img = document.getElementById("lightbox-img");
   const label = document.getElementById("lightbox-label");
   const closeBtn = document.getElementById("lightbox-close");
+  let previousFocus = null;
+  let clearImageTimeout = null;
+
+  lb.setAttribute("role", "dialog");
+  lb.setAttribute("aria-modal", "true");
+  lb.setAttribute("aria-labelledby", "lightbox-label");
+  lb.setAttribute("aria-hidden", "true");
 
   function open(src, title) {
+    window.clearTimeout(clearImageTimeout);
+    previousFocus = document.activeElement;
     img.src = src;
     img.alt = title || "Screenshot";
     label.textContent = title || "";
+    lb.setAttribute("aria-hidden", "false");
     lb.classList.add("open");
+    closeBtn.focus({ preventScroll: true });
   }
   function close() {
+    if (!lb.classList.contains("open")) return;
     lb.classList.remove("open");
-    img.src = "";
+    lb.setAttribute("aria-hidden", "true");
+    previousFocus?.focus({ preventScroll: true });
+    // Keep the photo visible while the closing animation finishes.
+    clearImageTimeout = window.setTimeout(() => { img.src = ""; }, 350);
   }
   closeBtn.addEventListener("click", close);
   lb.addEventListener("click", (e) => { if (e.target === lb) close(); });
-  document.addEventListener("keydown", (e) => { if (e.key === "Escape") close(); });
+  document.addEventListener("keydown", (e) => {
+    if (!lb.classList.contains("open")) return;
+    if (e.key === "Escape") close();
+    if (e.key === "Tab") {
+      e.preventDefault();
+      closeBtn.focus();
+    }
+  });
 
   window.__openLightbox = open;
 }
@@ -134,12 +156,18 @@ function initLightbox() {
 /* ---- Sidebar profile photo: hover preview + click for full-size view ---- */
 function initProfilePhoto() {
   document.querySelectorAll(".profile-avatar").forEach((avatar) => {
-    const showPreview = () => avatar.classList.add("is-previewing");
-    const hidePreview = () => avatar.classList.remove("is-previewing");
+    const stage = avatar.closest(".profile-photo-stage");
+    if (!stage) return;
+    const showPreview = () => stage.classList.add("is-photo-expanded");
+    const hidePreview = () => stage.classList.remove("is-photo-expanded");
 
-    avatar.addEventListener("pointerenter", showPreview);
-    avatar.addEventListener("pointerleave", hidePreview);
-    avatar.addEventListener("focus", showPreview);
+    stage.addEventListener("pointerenter", (event) => {
+      if (event.pointerType !== "touch") showPreview();
+    });
+    stage.addEventListener("pointerleave", hidePreview);
+    avatar.addEventListener("focus", () => {
+      if (avatar.matches(":focus-visible")) showPreview();
+    });
     avatar.addEventListener("blur", hidePreview);
     avatar.addEventListener("click", () => {
       const image = avatar.querySelector("img");

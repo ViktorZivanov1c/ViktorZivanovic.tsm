@@ -6,7 +6,8 @@
 <title>Viktorov dnevnik — Home</title>
 <meta name="description" content="A running record of my programming class — assignments, homework, and everything I'm learning along the way.">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💻</text></svg>">
-<link rel="stylesheet" href="assets/css/style.css?v=20261104-1">
+<link rel="stylesheet" href="assets/css/style.css?v=20261104-2">
+<link rel="stylesheet" href="assets/css/sidebar.css?v=20261104-2">
 <link rel="stylesheet" href="assets/css/intro.css">
 </head>
 <body class="app-page home-page">
@@ -34,14 +35,33 @@
       </div>
     </div>
 
-    <div class="side-profile">
-      <button class="profile-avatar" type="button" aria-label="Uvećaj Viktorovu fotografiju"><img src="assets/img/viktor-profile.jpeg" alt="Viktorova fotografija"></button>
-      <div class="profile-details">
-        <div class="field"><span class="k">ime</span><span class="v" data-cfg="fullName">Viktor Zivanovic</span></div>
-        <div class="field"><span class="k">skola</span><span class="v" data-cfg="school">Tehnicka skola Mladenovac</span></div>
-        <div class="field"><span class="k">odeljenje</span><span class="v" data-cfg="grade">III/4</span></div>
+    <section class="side-profile" aria-label="Informaciona tabla">
+      <div class="profile-cover">
+        <span class="profile-eyebrow">Informaciona tabla</span>
+        <span class="profile-cover-mark" aria-hidden="true">&lt;/&gt;</span>
       </div>
-    </div>
+      <div class="profile-photo-stage">
+        <button class="profile-avatar" type="button" aria-label="Uvećaj Viktorovu fotografiju" aria-haspopup="dialog">
+          <img src="assets/img/viktor-profile.jpeg" alt="Viktorova fotografija" width="192" height="192">
+          <span class="profile-photo-zoom" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 4.5 4.5M10.5 7.5v6M7.5 10.5h6"/></svg></span>
+        </button>
+        <span class="profile-photo-hint">Pređi mišem ili klikni za veću sliku</span>
+      </div>
+      <div class="profile-identity">
+        <h2 data-cfg="fullName">Viktor Zivanovic</h2>
+        <p>Učenik · Programiranje</p>
+      </div>
+      <div class="profile-school">
+        <span class="profile-school-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m2 9 10-5 10 5-10 5zM6 11v6c3 3 9 3 12 0v-6M22 9v7"/></svg></span>
+        <div><span class="profile-meta-label">Škola</span><span data-cfg="school">Tehnicka skola Mladenovac</span></div>
+      </div>
+      <div class="profile-bottom">
+        <span class="profile-class"><span class="profile-meta-label">Odeljenje</span><strong data-cfg="grade">III/4</strong></span>
+        <span class="profile-subject"><span aria-hidden="true">&lt;/&gt;</span> Školski portfolio</span>
+      </div>
+    </section>
+
+    <p class="sidebar-section-label">Moj rad</p>
 
     <nav class="side-nav">
       <a href="index.html"><span class="tag nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m3.5 10 8.5-7 8.5 7v10.5H14v-6H10v6H3.5z"/></svg></span>Po&#269;etna<span class="nav-arrow" aria-hidden="true">&#8250;</span></a>
@@ -124,7 +144,7 @@
 <script src="assets/js/data-assignments.js?v=20261022-4"></script>
 <script src="assets/js/data-homework.js"></script>
 <script src="assets/js/quotes.js"></script>
-<script src="assets/js/render.js"></script>
+<script src="assets/js/render.js?v=20261104-2"></script>
 <script src="assets/js/matrix.js"></script>
 <script src="assets/js/starfield.js"></script>
 <script src="assets/js/intro.js"></script>
