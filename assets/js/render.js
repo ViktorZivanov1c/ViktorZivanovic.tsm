@@ -131,6 +131,25 @@ function initLightbox() {
   window.__openLightbox = open;
 }
 
+/* ---- Sidebar profile photo: hover preview + click for full-size view ---- */
+function initProfilePhoto() {
+  document.querySelectorAll(".profile-avatar").forEach((avatar) => {
+    const showPreview = () => avatar.classList.add("is-previewing");
+    const hidePreview = () => avatar.classList.remove("is-previewing");
+
+    avatar.addEventListener("pointerenter", showPreview);
+    avatar.addEventListener("pointerleave", hidePreview);
+    avatar.addEventListener("focus", showPreview);
+    avatar.addEventListener("blur", hidePreview);
+    avatar.addEventListener("click", () => {
+      const image = avatar.querySelector("img");
+      if (image?.src && window.__openLightbox) {
+        window.__openLightbox(image.src, image.alt || "Profilna fotografija");
+      }
+    });
+  });
+}
+
 /* ---- Card builders ---- */
 function assignmentCardHTML(a) {
   const shot = (a.screenshots && a.screenshots[0]) || "";
@@ -631,6 +650,7 @@ document.addEventListener("DOMContentLoaded", () => {
   initMobileNav();
   markActiveNav();
   initLightbox();
+  initProfilePhoto();
   renderAssignmentsPage();
   renderHomeworkPage();
   renderHomeStats();

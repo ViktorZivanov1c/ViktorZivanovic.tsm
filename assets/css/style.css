@@ -287,13 +287,35 @@ body.task-page::after {
 }
 
 .profile-avatar {
+  position: relative;
+  display: grid;
   width: 96px;
   height: 96px;
+  padding: 0;
   overflow: hidden;
   border: 2px solid var(--color-gold);
   border-radius: 50%;
+  appearance: none;
+  -webkit-appearance: none;
   background: #6d4709;
   box-shadow: 0 0 0 3px rgba(245, 197, 66, 0.12), 0 0 25px rgba(245, 197, 66, 0.28);
+  cursor: zoom-in;
+  isolation: isolate;
+  transition: transform 0.34s var(--ease-out), border-color 0.34s ease, box-shadow 0.34s ease;
+}
+
+.profile-avatar:hover,
+.profile-avatar:focus-visible,
+.profile-avatar.is-previewing {
+  z-index: 2;
+  border-color: var(--color-gold-light);
+  box-shadow: 0 0 0 5px rgba(245, 197, 66, 0.16), 0 15px 38px rgba(0, 0, 0, 0.45), 0 0 34px rgba(245, 197, 66, 0.45);
+  transform: scale(1.58);
+}
+
+.profile-avatar:focus-visible {
+  outline: 2px solid #fff1a7;
+  outline-offset: 5px;
 }
 
 .profile-avatar img {
@@ -303,6 +325,14 @@ body.task-page::after {
   object-fit: cover;
   object-position: 50% 32%;
   filter: brightness(1.16) contrast(1.04);
+  transition: transform 0.34s var(--ease-out), filter 0.34s ease;
+}
+
+.profile-avatar:hover img,
+.profile-avatar:focus-visible img,
+.profile-avatar.is-previewing img {
+  filter: brightness(1.22) contrast(1.06);
+  transform: scale(1.1);
 }
 
 .profile-details {
@@ -1239,15 +1269,22 @@ main.content {
   position: fixed;
   z-index: 2000;
   inset: 0;
-  display: none;
+  display: grid;
   place-items: center;
   padding: 22px;
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
   background: rgba(4, 3, 1, 0.87);
   backdrop-filter: blur(10px);
+  transition: opacity 0.28s ease, visibility 0.28s step-end;
 }
 
 .lightbox.open {
-  display: grid;
+  visibility: visible;
+  opacity: 1;
+  pointer-events: auto;
+  transition-timing-function: ease, step-start;
 }
 
 .lightbox-inner {
@@ -1257,6 +1294,12 @@ main.content {
   border-radius: var(--radius-card);
   background: #1b1507;
   box-shadow: 0 24px 80px rgba(0, 0, 0, 0.72), 0 0 38px rgba(245, 197, 66, 0.14);
+  transform: translateY(18px) scale(0.96);
+  transition: transform 0.34s var(--ease-out);
+}
+
+.lightbox.open .lightbox-inner {
+  transform: translateY(0) scale(1);
 }
 
 .lightbox-head {
