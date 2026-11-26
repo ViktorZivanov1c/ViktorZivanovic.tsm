@@ -3,12 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Deo za igricu</title>
-  <link rel="stylesheet" href="style.css">
+  <title>One More Bunker — Official Website</title>
+  <meta name="description" content="Zalihe u bunkeru ponestaju. Prelaziš iz bunkera u bunker dok se zaraza širi. Hoćeš li savladati sve prepreke na putu do sledeće faze apokalipse i pronaći svoju nestalu ćerku?">
+  <link rel="stylesheet" href="style.css?v=20261126-3">
   <link rel="stylesheet" href="intro.css?v=20261126-2">
   <script src="intro.js?v=20261126-2" defer></script>
+  <script src="game.js?v=20261126-1" defer></script>
 </head>
-<body>
+<body class="game-page">
   <div class="tlr-intro" aria-hidden="true" hidden>
     <div class="tlr-intro-stage">
       <div class="tlr-bunker">
@@ -30,10 +32,35 @@
       <img class="tlr-intro-mask" src="assets/gas-mask.svg?v=2" alt="" width="160" height="180">
     </div>
   </div>
-  <main>
-    <h1>Deo za igricu</h1>
-    <p>U pripremi.</p>
-    <a href="../index.html">Nazad na školski sajt</a>
+  <div class="game-backdrop" aria-hidden="true"></div>
+  <div class="tlr-dust game-dust" aria-hidden="true"></div>
+  <main id="game-page">
+    <header class="game-header">
+      <img class="studio-logo" src="assets/tlr-logo.png" alt="TLR — The Last Ration" width="1254" height="1254">
+    </header>
+    <section class="game-hero" aria-labelledby="game-title">
+      <img class="game-hero-image" src="assets/bunker.png" alt="" width="1672" height="941" fetchpriority="high">
+      <div class="game-hero-content">
+        <h1 id="game-title">
+          <img class="game-logo" src="assets/one-more-bunker.png" alt="One More Bunker" width="2172" height="724">
+        </h1>
+        <p class="game-description">Zalihe u bunkeru ponestaju. Prelaziš iz bunkera u bunker dok se zaraza širi. Hoćeš li savladati sve prepreke na putu do sledeće faze apokalipse i pronaći svoju nestalu ćerku?</p>
+        <h2 class="game-release">AVAILABLE SOON ON PC</h2>
+        <div class="game-actions">
+          <a class="game-button trailer-button" id="official-trailer" role="link" aria-disabled="true" target="_blank" rel="noopener noreferrer" title="YouTube link za trailer još nije dodat.">
+            <svg aria-hidden="true" viewBox="0 0 24 24" fill="none"><path d="m8 5 11 7-11 7Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
+            <span>OFFICIAL TRAILER</span>
+          </a>
+          <button class="game-button download-button" type="button" disabled aria-label="DOWNLOAD NOW — COMING SOON">
+            <span class="download-label">DOWNLOAD NOW</span>
+            <span class="coming-soon-tape" aria-hidden="true"><span>COMING SOON</span></span>
+          </button>
+        </div>
+      </div>
+    </section>
+    <footer class="game-footer">
+      <a href="../index.html">Nazad na školski sajt</a>
+    </footer>
   </main>
 </body>
 </html>
