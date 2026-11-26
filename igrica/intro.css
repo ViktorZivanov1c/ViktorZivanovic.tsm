@@ -1,27 +1,143 @@
-.tlr-intro {
-  --tlr-logo-size: min(72vw, 460px, 75svh);
-  --tlr-mask-size: calc(var(--tlr-logo-size) * 0.38);
+﻿.tlr-intro {
+  --tlr-duration: 3.4s;
+  --tlr-logo-size: min(82vw, 560px, 86svh);
+  --tlr-mask-size: clamp(120px, calc(var(--tlr-logo-size) * 0.46), 260px);
   --tlr-mask-height: calc(var(--tlr-mask-size) * 1.125);
   --tlr-slide-distance: calc(50vh + var(--tlr-mask-height));
   position: fixed;
   z-index: 1000;
   inset: 0;
+  isolation: isolate;
   overflow: hidden;
+  background: radial-gradient(ellipse at 50% 42%, #233537, #0a1114 46%, #030506 86%);
+}
+
+.tlr-intro[hidden] { display: none; }
+body.tlr-intro-active { overflow: hidden; }
+
+.tlr-bunker,
+.tlr-intro-stage {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+/* Recessed steel walls and a floor receding into the dark. */
+.tlr-bunker::before {
+  position: absolute;
+  inset: 7% 13%;
+  border: 1px solid #7b99922b;
+  border-radius: 8px;
   background:
-    radial-gradient(ellipse at 50% 45%, #18212766, transparent 62%),
-    linear-gradient(180deg, #07090b, #020304);
+    linear-gradient(90deg, #0006, transparent 12% 88%, #0006),
+    repeating-linear-gradient(0deg, transparent 0 119px, #a4bcb609 120px, #0005 121px 123px);
+  box-shadow: 0 0 0 12px #040809, 0 0 0 13px #5a6d6526, 0 0 0 26px #080d10, 0 0 0 27px #758b7820, inset 0 0 90px #0009;
+  content: "";
 }
 
-.tlr-intro[hidden] {
-  display: none;
+.tlr-bunker-wall {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 18%;
+  border-right: 2px solid #4e61544a;
+  background:
+    radial-gradient(circle, #88938170 1px, #030807 2px 4px, transparent 5px) 85% 30px / 13px 110px repeat-y,
+    repeating-linear-gradient(173deg, transparent 0 72px, #b2b6940b 73px, #0009 74px 78px),
+    linear-gradient(90deg, #030506, #1d2725 70%, #0c1415 72%, #34413b 75%, #0a1112 88%);
+  box-shadow: 20px 0 60px #0009;
+  clip-path: polygon(0 0, 100% 0, 100% 12%, 81% 22%, 81% 78%, 100% 88%, 100% 100%, 0 100%);
 }
 
-body.tlr-intro-active {
-  overflow: hidden;
+.tlr-bunker-wall:nth-child(2) {
+  right: 0;
+  left: auto;
+  transform: scaleX(-1);
+}
+
+.tlr-floor {
+  position: absolute;
+  right: -25%;
+  bottom: -28%;
+  left: -25%;
+  height: 55%;
+  background:
+    repeating-linear-gradient(90deg, transparent 0 119px, #76877c24 120px 121px),
+    repeating-linear-gradient(0deg, #0e1718 0 64px, #566e5d30 65px 66px);
+  mask-image: linear-gradient(transparent, #000 65%);
+  transform: perspective(350px) rotateX(58deg);
+}
+
+.tlr-emergency-light {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 11% 26%, #b2371e36, transparent 28%),
+    radial-gradient(ellipse at 89% 26%, #b2371e36, transparent 28%),
+    conic-gradient(from 155deg at 48% -15%, transparent, #a3c6c314 8deg, transparent 19deg);
+}
+
+.tlr-emergency-light::before,
+.tlr-emergency-light::after {
+  position: absolute;
+  top: 19%;
+  left: 14%;
+  width: 3px;
+  height: 19%;
+  border-radius: 2px;
+  background: #c35337;
+  box-shadow: 0 0 10px #e65335a0, 0 0 30px #df482750;
+  content: "";
+}
+
+.tlr-emergency-light::after { right: 14%; left: auto; }
+
+.tlr-haze {
+  position: absolute;
+  inset: -15%;
+  background:
+    radial-gradient(ellipse at 25% 77%, #8baba92b, transparent 34%),
+    radial-gradient(ellipse at 73% 62%, #78968c20, transparent 32%),
+    radial-gradient(ellipse at 42% 35%, #b7cac318, transparent 27%);
+  opacity: .7;
+}
+
+.tlr-dust {
+  position: absolute;
+  inset: -10%;
+  background:
+    radial-gradient(circle at 34px 61px, #d5e2ce99 0 .7px, transparent 1.7px) 0 0 / 193px 237px,
+    radial-gradient(circle at 81px 121px, #9bb3ac80 0 1px, transparent 2px) 0 0 / 311px 283px,
+    radial-gradient(circle at 121px 37px, #e595603b 0 1px, transparent 2.5px) 0 0 / 257px 191px;
+  opacity: .35;
+}
+
+.tlr-bunker::after {
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(0deg, #0000 0 3px, #0002 4px);
+  content: "";
+}
+
+.tlr-intro::after {
+  position: absolute;
+  z-index: 5;
+  inset: 0;
+  background: radial-gradient(ellipse at 50% 46%, transparent 23%, #0005 67%, #000b);
+  content: "";
+  pointer-events: none;
+}
+
+.tlr-intro-stage {
+  z-index: 2;
+  background: inherit;
 }
 
 .tlr-intro-logo,
-.tlr-intro-mask {
+.tlr-intro-mask,
+.tlr-impact,
+.tlr-impact-ring {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -39,47 +155,67 @@ body.tlr-intro-active {
 }
 
 .tlr-intro-mask {
+  z-index: 3;
+  width: var(--tlr-mask-size);
+  transform: translate(-50%, calc(-50% - 110vh));
+  filter: drop-shadow(0 18px 20px #000b);
+}
+
+.tlr-impact {
+  z-index: 1;
+  width: min(95vw, 700px, 95svh);
+  color: #b7d4cb;
+  stroke-width: .7;
+  opacity: 0;
+  transform: translate(-50%, -50%);
+}
+
+.tlr-impact-ring {
   z-index: 1;
   width: var(--tlr-mask-size);
-  transform: translate(-50%, calc(-50% - 70vh));
-  filter: drop-shadow(0 12px 14px #0009);
+  aspect-ratio: 1;
+  border: 1px solid #b7d4cb66;
+  border-radius: 50%;
+  box-shadow: 0 0 24px #92c1b31a, inset 0 0 18px #a5d6c91a;
+  opacity: 0;
+  transform: translate(-50%, -50%);
 }
 
-.tlr-intro.is-playing {
-  animation: tlr-intro-exit 3s linear both;
-}
-
-.tlr-intro.is-playing .tlr-intro-mask {
-  animation: tlr-mask-move 3s both;
-}
-
-.tlr-intro.is-playing .tlr-intro-logo {
-  animation: tlr-logo-reveal 3s both;
-}
+.tlr-intro.is-playing { animation: tlr-intro-exit var(--tlr-duration) linear both; }
+.is-playing .tlr-intro-stage { animation: tlr-camera-impact var(--tlr-duration) linear both; }
+.is-playing .tlr-intro-mask { animation: tlr-mask-move var(--tlr-duration) both; }
+.is-playing .tlr-intro-logo { animation: tlr-logo-reveal var(--tlr-duration) both; }
+.is-playing .tlr-impact { animation: tlr-glass-impact var(--tlr-duration) linear both; }
+.is-playing .tlr-impact-ring { animation: tlr-impact-wave var(--tlr-duration) ease-out both; }
+.is-playing .tlr-haze { animation: tlr-haze-drift var(--tlr-duration) ease-out both; }
+.is-playing .tlr-dust { animation: tlr-dust-drift var(--tlr-duration) linear both; }
+.is-playing .tlr-bunker { animation: tlr-bunker-arrival var(--tlr-duration) ease-out both; }
 
 @keyframes tlr-mask-move {
   0% {
-    transform: translate(-50%, calc(-50% - 70vh)) scale(1.08);
-    animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+    transform: perspective(700px) translate(-50%, calc(-50% - 110vh)) rotateX(52deg) rotate(-17deg) scale(.6);
+    animation-timing-function: cubic-bezier(.25, .65, .2, 1);
+  }
+  14% {
+    transform: perspective(700px) translate(-50%, -65%) rotateX(-14deg) rotate(4deg) scale(1.16);
+    animation-timing-function: cubic-bezier(.55, 0, .8, .4);
   }
   18% {
-    transform: translate(-50%, -50%) scale(1.04, 0.97);
+    transform: perspective(700px) translate(-50%, -50%) rotateX(0) rotate(0) scale(1.1, .94);
     animation-timing-function: ease-out;
   }
-  23% {
-    transform: translate(-50%, -50%) scale(0.99, 1.01);
+  21% {
+    transform: translate(-50%, calc(-50% - 8px)) scale(.98, 1.03);
     animation-timing-function: ease-out;
   }
   25% {
     transform: translate(-50%, -50%) scale(1);
-    animation-timing-function: cubic-bezier(0.35, 0, 0.7, 1);
+    animation-timing-function: cubic-bezier(.35, 0, .7, 1);
   }
-  75%, 100% {
-    transform: translate(-50%, calc(-50% + var(--tlr-slide-distance)));
-  }
+  75%, 100% { transform: translate(-50%, calc(-50% + var(--tlr-slide-distance))); }
 }
 
-/* The reveal edge follows the mask's top edge with the same easing. */
+/* Both edges share the same distance and easing, including during the camera jolt. */
 @keyframes tlr-logo-reveal {
   0%, 24.99% {
     opacity: 0;
@@ -88,7 +224,7 @@ body.tlr-intro-active {
   25% {
     opacity: 1;
     clip-path: inset(0 0 calc(50% + var(--tlr-mask-height) / 2) 0);
-    animation-timing-function: cubic-bezier(0.35, 0, 0.7, 1);
+    animation-timing-function: cubic-bezier(.35, 0, .7, 1);
   }
   75%, 100% {
     opacity: 1;
@@ -96,22 +232,56 @@ body.tlr-intro-active {
   }
 }
 
+@keyframes tlr-camera-impact {
+  0%, 17%, 27%, 100% { transform: translate(0) rotate(0); }
+  18% { transform: translate(0, 8px) rotate(.35deg); }
+  19.5% { transform: translate(-4px, -5px) rotate(-.25deg); }
+  21% { transform: translate(3px, 3px) rotate(.15deg); }
+  23% { transform: translate(-1px, -2px); }
+}
+
+@keyframes tlr-glass-impact {
+  0%, 17.9% { opacity: 0; }
+  18%, 23% { opacity: .38; }
+  48%, 100% { opacity: 0; }
+}
+
+@keyframes tlr-impact-wave {
+  0%, 17% { opacity: 0; transform: translate(-50%, -50%) scale(.65); }
+  18% { opacity: .45; transform: translate(-50%, -50%) scale(.85); }
+  37%, 100% { opacity: 0; transform: translate(-50%, -50%) scale(3.3); }
+}
+
+@keyframes tlr-haze-drift {
+  from { transform: translate(-5%, 4%) scale(1.08); opacity: .35; }
+  to { transform: translate(4%, -3%) scale(1); opacity: .8; }
+}
+
+@keyframes tlr-dust-drift {
+  from { transform: translate(0, 3%); }
+  to { transform: translate(-2%, -7%); }
+}
+
+@keyframes tlr-bunker-arrival {
+  from { transform: scale(1.15); opacity: .4; }
+  25%, to { transform: scale(1); opacity: 1; }
+}
+
 @keyframes tlr-intro-exit {
-  0%, 91.667% { opacity: 1; }
+  0%, 91.176% { opacity: 1; }
   100% { opacity: 0; }
 }
 
+@media (max-width: 480px) {
+  .tlr-bunker-wall { width: 12%; }
+  .tlr-bunker::before { inset: 6% 9%; }
+  .tlr-emergency-light::before { left: 9.5%; }
+  .tlr-emergency-light::after { right: 9.5%; }
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .tlr-intro {
-    display: none;
-    animation: none !important;
-  }
-
-  body.tlr-intro-active {
-    overflow: auto;
-  }
-
-  .tlr-intro.is-playing img {
-    animation: none;
-  }
+  .tlr-intro { display: none; }
+  .tlr-intro,
+  .tlr-intro * { animation: none !important; }
+  body.tlr-intro-active { overflow: auto; }
 }

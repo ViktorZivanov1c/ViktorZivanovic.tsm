@@ -30,7 +30,7 @@
     started = true;
     window.clearTimeout(timeout);
     // Also recover if animationend never fires or the animation CSS is missing.
-    timeout = window.setTimeout(finish, 3300);
+    timeout = window.setTimeout(finish, 3800);
     intro.classList.add('is-playing');
   }
 
