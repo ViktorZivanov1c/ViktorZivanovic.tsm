@@ -6,20 +6,21 @@
   <title>One More Bunker — Zvanični sajt</title>
   <meta name="description" content="Zalihe u bunkeru ponestaju. Prelaziš iz bunkera u bunker dok se zaraza širi. Hoćeš li savladati sve prepreke na putu do sledeće faze apokalipse i pronaći svoju nestalu ćerku?">
   <link rel="stylesheet" href="style.css?v=20261126-6">
-  <link rel="stylesheet" href="intro.css?v=20261126-2">
-  <script src="intro.js?v=20261126-2" defer></script>
+  <link rel="stylesheet" href="intro.css?v=20261126-3">
+  <script src="intro.js?v=20261126-3" defer></script>
   <script src="game.js?v=20261126-1" defer></script>
 </head>
 <body class="game-page">
   <div class="tlr-intro" aria-hidden="true" hidden>
     <div class="tlr-intro-stage">
       <div class="tlr-bunker">
-        <div class="tlr-bunker-wall"></div>
-        <div class="tlr-bunker-wall"></div>
-        <div class="tlr-floor"></div>
         <div class="tlr-emergency-light"></div>
         <div class="tlr-haze"></div>
         <div class="tlr-dust"></div>
+      </div>
+      <div class="tlr-vault">
+        <div class="tlr-vault-door"></div>
+        <div class="tlr-vault-door"></div>
       </div>
       <svg class="tlr-impact" viewBox="0 0 600 600" fill="none" focusable="false">
         <g stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
@@ -28,8 +29,9 @@
         </g>
       </svg>
       <div class="tlr-impact-ring"></div>
-      <img class="tlr-intro-logo" src="assets/tlr-logo.png" alt="" width="1254" height="1254" decoding="async" fetchpriority="high">
-      <img class="tlr-intro-mask" src="assets/gas-mask.svg?v=2" alt="" width="160" height="180">
+      <div class="tlr-impact-dust"></div>
+      <img class="tlr-intro-logo" src="assets/one-more-bunker.png" alt="" width="2172" height="724" decoding="async" fetchpriority="high">
+      <img class="tlr-intro-mask" src="assets/gas-mask-realistic.png" alt="" width="1254" height="1254" decoding="async" fetchpriority="high">
     </div>
   </div>
   <div class="game-backdrop" aria-hidden="true"></div>
