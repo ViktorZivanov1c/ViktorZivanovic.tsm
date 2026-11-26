@@ -235,12 +235,39 @@ a { color: inherit; }
   letter-spacing: .11em;
 }
 
+/* Two frayed edges overlap the scene boundary instead of a straight divider. */
+.game-scene-transition {
+  --scene-edge-height: clamp(104px, 12vw, 176px);
+  position: relative;
+  z-index: 1;
+  height: var(--scene-edge-height);
+  margin-top: calc(var(--scene-edge-height) * -.5);
+  margin-bottom: calc(var(--scene-edge-height) * -.5);
+  pointer-events: none;
+}
+
+.game-scene-edge {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: calc(50% + 1px);
+  background: #030504;
+  -webkit-mask: url('assets/scene-edge.svg') center / 100% 100% no-repeat;
+  mask: url('assets/scene-edge.svg') center / 100% 100% no-repeat;
+}
+
+.game-scene-edge:last-child {
+  top: auto;
+  bottom: 0;
+  transform: rotate(180deg);
+}
+
 .game-story {
   position: relative;
   overflow: hidden;
   isolation: isolate;
   padding: clamp(72px, 7vw, 112px) 36px;
-  border-top: 1px solid #b8ac8a30;
   border-bottom: 1px solid #b8ac8a24;
   background: #101512;
 }

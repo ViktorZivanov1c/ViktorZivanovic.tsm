@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="180" viewBox="0 0 1600 180" preserveAspectRatio="none">
+  <defs>
+    <linearGradient id="smoke" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#fff" stop-opacity="0"/>
+      <stop offset=".25" stop-color="#fff" stop-opacity=".07"/>
+      <stop offset=".52" stop-color="#fff" stop-opacity=".4"/>
+      <stop offset=".8" stop-color="#fff" stop-opacity=".9"/>
+      <stop offset="1" stop-color="#fff"/>
+    </linearGradient>
+    <linearGradient id="core" x1="0" y1="95" x2="0" y2="174" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#fff" stop-opacity="0"/>
+      <stop offset=".6" stop-color="#fff" stop-opacity=".5"/>
+      <stop offset="1" stop-color="#fff"/>
+    </linearGradient>
+    <filter id="smoke-fray" x="-5%" y="-50%" width="110%" height="200%">
+      <feTurbulence type="fractalNoise" baseFrequency=".018 .095" numOctaves="4" seed="27" result="noise"/>
+      <feColorMatrix in="noise" type="matrix" values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 1.5 1.5 1.5 0 -1.6" result="grain"/>
+      <feComposite in="SourceGraphic" in2="grain" operator="in" result="distressed"/>
+      <feDisplacementMap in="distressed" in2="noise" scale="100" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+    <filter id="rough-edge" x="-5%" y="-50%" width="110%" height="200%">
+      <feTurbulence type="fractalNoise" baseFrequency=".035 .16" numOctaves="3" seed="9" result="noise"/>
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="32" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+  </defs>
+  <path d="M-40 24C60 47 113 3 210 30S375 66 485 32 670 6 785 43 928 70 1050 31 1220 55 1350 24 1510 45 1640 12V220H-40Z" fill="url(#smoke)" filter="url(#smoke-fray)"/>
+  <path d="M-40 124C38 101 115 129 190 110S345 124 430 98 570 132 660 111 798 91 885 120 1045 99 1130 114 1294 89 1380 109 1525 94 1640 116V220H-40Z" fill="url(#core)" filter="url(#rough-edge)"/>
+  <path d="M0 174H1600V180H0Z" fill="#fff"/>
+</svg>
