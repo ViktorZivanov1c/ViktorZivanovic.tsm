@@ -26,9 +26,50 @@ a { color: inherit; }
   position: fixed;
   z-index: 2;
   inset: 0;
-  opacity: .18;
+  overflow: hidden;
   pointer-events: none;
-  animation: game-dust-drift 55s linear infinite;
+}
+
+/* Three depths of ash, each with its own wind direction and speed. */
+.game-dust::before,
+.game-dust::after,
+.game-dust-specks {
+  position: absolute;
+  inset: -100px;
+  background-repeat: repeat;
+  pointer-events: none;
+  content: '';
+}
+
+.game-dust::before {
+  background-image:
+    radial-gradient(circle at 34px 61px, #d9d4bc99 0 .8px, transparent 1.6px),
+    radial-gradient(circle at 81px 121px, #b6c1b580 0 1px, transparent 1.8px),
+    radial-gradient(circle at 121px 37px, #dbb68580 0 .7px, transparent 1.5px);
+  background-size: 211px 267px, 317px 229px, 383px 401px;
+  opacity: .5;
+  animation: game-dust-far 48s ease-in-out infinite alternate;
+}
+
+.game-dust-specks {
+  background-image:
+    radial-gradient(ellipse 1.3px 2px at 74px 95px, #d6cfb7b3, transparent),
+    radial-gradient(ellipse 1.8px 1px at 143px 181px, #b5bca8b3, transparent),
+    radial-gradient(circle at 231px 54px, #d4b28199 0 1px, transparent 2.2px);
+  background-size: 271px 313px, 353px 241px, 419px 367px;
+  opacity: .55;
+  animation: game-dust-middle 31s ease-in-out infinite alternate;
+}
+
+.game-dust::after {
+  background-image:
+    radial-gradient(ellipse 3px 2px at 90px 70px, #dacbab99, transparent),
+    radial-gradient(ellipse 2px 3.5px at 281px 239px, #c7ccba99, transparent),
+    radial-gradient(circle at 151px 181px, #d2ac7470 0 1.2px, transparent 3px);
+  background-size: 463px 409px, 557px 487px, 617px 373px;
+  opacity: .4;
+  filter: blur(.35px);
+  animation: game-dust-near 39s ease-in-out infinite alternate;
 }
 
 #game-page { position: relative; z-index: 1; }
@@ -198,9 +239,20 @@ a { color: inherit; }
 .game-footer a { color: #b9b5a9; font-size: .875rem; text-decoration-color: #827554; text-underline-offset: 5px; }
 .game-footer a:hover { color: var(--game-amber); }
 
-@keyframes game-dust-drift {
-  from { transform: translate(0, 3%); }
-  to { transform: translate(-3%, -7%); }
+@keyframes game-dust-far {
+  from { transform: translate(-20px, 55px); }
+  to { transform: translate(44px, -65px); }
+}
+
+@keyframes game-dust-middle {
+  0% { transform: translate(-65px, 70px); }
+  50% { transform: translate(12px, 5px); }
+  100% { transform: translate(65px, -70px); }
+}
+
+@keyframes game-dust-near {
+  from { transform: translate(70px, -70px); }
+  to { transform: translate(-55px, 75px); }
 }
 
 @media (max-width: 600px) {
@@ -224,6 +276,8 @@ a { color: inherit; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .game-page .game-dust { animation: none; }
+  .game-dust::before,
+  .game-dust::after,
+  .game-dust-specks { animation: none; }
   .trailer-button { transition: none; }
 }

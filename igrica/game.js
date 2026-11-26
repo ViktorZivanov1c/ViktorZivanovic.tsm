@@ -1,5 +1,5 @@
 (() => {
-  // UNESI YOUTUBE LINK ZA OFFICIAL TRAILER OVDE (ostavi prazno dok nije dostupan).
+  // UNESI YOUTUBE LINK ZA ZVANIČNU NAJAVU OVDE (ostavi prazno dok nije dostupan).
   const OFFICIAL_TRAILER_URL = '';
 
   const button = document.getElementById('official-trailer');
@@ -13,6 +13,6 @@
     button.removeAttribute('aria-disabled');
     button.removeAttribute('title');
   } catch {
-    // Keep the button unavailable until a valid YouTube address is provided.
+    // Dugme ostaje neaktivno dok se ne unese ispravna YouTube adresa.
   }
 })();
