@@ -1,0 +1,109 @@
+/* Rusted warning panel: a separate entrance to the game section. */
+.btn.game-entry {
+  position: relative;
+  isolation: isolate;
+  display: inline-flex;
+  grid-column: 1 / -1;
+  justify-self: start;
+  width: min(100%, 340px);
+  min-height: 78px;
+  gap: 16px;
+  margin-top: 10px;
+  overflow: hidden;
+  padding: 18px 24px 24px;
+  border: 2px solid #df5745;
+  border-radius: 3px 15px 3px 15px;
+  background:
+    linear-gradient(166deg, transparent 24%, #f7b39a18 24.5%, transparent 25.5%, transparent 68%, #08060580 69%, transparent 70%),
+    repeating-linear-gradient(3deg, transparent 0 6px, #10070633 7px 8px),
+    linear-gradient(135deg, #78241e, #351010 60%, #551714);
+  color: #fff0df;
+  font-family: var(--font-mono);
+  font-size: 18px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  text-shadow: 0 2px 2px #160403;
+  box-shadow: inset 0 1px 0 #ffb18c55, 0 0 22px #e33e2d45;
+  animation: game-entry-pulse 2.8s ease-in-out infinite;
+}
+
+.game-entry > span {
+  position: relative;
+  z-index: 1;
+}
+
+.game-entry .game-entry-icon {
+  flex: 0 0 auto;
+  color: #ffb398;
+  font-family: system-ui, sans-serif;
+  font-size: 34px;
+  line-height: 1;
+}
+
+.game-entry::before {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 7px;
+  background: repeating-linear-gradient(-45deg, #e35b40 0 10px, #1c0b09 10px 20px);
+  content: "";
+  pointer-events: none;
+}
+
+.game-entry::after {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(105deg, transparent 35%, #ffb69930 49%, transparent 63%);
+  content: "";
+  pointer-events: none;
+  transform: translateX(-140%);
+  animation: game-entry-sweep 4.2s ease-in-out infinite;
+}
+
+.btn.game-entry:hover {
+  border-color: #ffad8e;
+  background-color: #982b20;
+  color: #fff8ee;
+  transform: translateY(-2px);
+}
+
+.btn.game-entry:focus-visible {
+  outline: 3px solid #ffb398;
+  outline-offset: 5px;
+}
+
+@keyframes game-entry-pulse {
+  0%, 100% {
+    box-shadow: inset 0 1px 0 #ffb18c55, 0 0 18px #e33e2d40, 0 8px 20px #17030266;
+  }
+  50% {
+    box-shadow: inset 0 1px 0 #ffb18c88, 0 0 34px #ef493870, 0 8px 24px #17030288;
+  }
+}
+
+@keyframes game-entry-sweep {
+  0%, 35% { transform: translateX(-140%); }
+  75%, 100% { transform: translateX(140%); }
+}
+
+@media (max-width: 480px) {
+  .btn.game-entry {
+    min-height: 72px;
+    gap: 12px;
+    padding: 16px 16px 22px;
+    font-size: 16px;
+  }
+
+  .game-entry .game-entry-icon {
+    font-size: 28px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn.game-entry,
+  .game-entry::after {
+    animation: none;
+  }
+}
