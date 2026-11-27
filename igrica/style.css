@@ -833,8 +833,12 @@ body.tlr-intro-active { overflow: hidden; }
   font: 600 clamp(1.65rem, 2.5vw, 2.25rem)/1.18 Bahnschrift, 'Segoe UI', sans-serif;
   letter-spacing: .025em;
   text-transform: uppercase;
-  mask-image: url('assets/type-fissures.svg'), linear-gradient(#000b, #000b);
-  mask-size: 2.6em 1.14em, 100% 100%;
+  mask-image: url('assets/type-fissures.svg');
+  mask-size: 2.6em 1.14em;
+}
+.team-member li span {
+  mask-image: url('assets/type-fissures.svg'), linear-gradient(#0004, #0004);
+  mask-size: 2.9em 1.4em, 100% 100%;
 }
 .team-member ul { display: flex; flex-wrap: wrap; gap: 7px; list-style: none; margin: 0; padding: 0; }
 .team-member li { display: inline-flex; align-items: center; gap: 7px; padding: 4px 9px; border-radius: 3px; background: #161a17; border: 1px solid #50564c; font: 500 .94rem/1.4 'Segoe UI', system-ui, sans-serif; letter-spacing: .01em; }
