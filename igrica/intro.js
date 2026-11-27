@@ -4,7 +4,9 @@
   if (!intro || !content) return;
 
   const logo = intro.querySelector('.tlr-intro-logo');
-  const mask = intro.querySelector('.tlr-intro-mask');
+  const studio = intro.querySelector('.tlr-studio-half img');
+  const door = new Image();
+  door.src = 'assets/bunker-blast-doors.png';
   const motion = window.matchMedia('(prefers-reduced-motion: reduce)');
   let finished = false;
   let started = false;
@@ -27,26 +29,26 @@
 
   function play() {
     if (finished || started) return;
-    if (!logo.naturalWidth || motion.matches) return finish();
+    if (!logo.naturalWidth || !studio.naturalWidth || motion.matches) return finish();
     started = true;
     window.clearTimeout(timeout);
     // Also recover if animationend never fires or the animation CSS is missing.
     intro.classList.add('is-playing');
-    const seconds = parseFloat(window.getComputedStyle(intro).animationDuration) || 4.2;
+    const seconds = parseFloat(window.getComputedStyle(intro).animationDuration) || 8.8;
     timeout = window.setTimeout(finish, seconds * 1000 + 400);
   }
 
   async function prepare() {
     if (finished || started) return;
     try {
-      await Promise.all([logo.decode(), mask.decode()]);
+      await Promise.all([logo.decode(), studio.decode(), door.decode()]);
       play();
     } catch {
       finish();
     }
   }
 
-  if (motion.matches || !logo || !mask) return finish();
+  if (motion.matches || !logo || !studio) return finish();
 
   document.body.classList.add('tlr-intro-active');
   content.inert = true;
@@ -57,8 +59,9 @@
     if (event.target === intro && event.animationName === 'tlr-intro-exit') finish();
   });
   // A stalled image must never leave the visitor behind an overlay.
-  timeout = window.setTimeout(finish, 2200);
+  timeout = window.setTimeout(finish, 5000);
   logo.addEventListener('error', finish, { once: true });
-  mask.addEventListener('error', finish, { once: true });
+  studio.addEventListener('error', finish, { once: true });
+  door.addEventListener('error', finish, { once: true });
   prepare();
 })();

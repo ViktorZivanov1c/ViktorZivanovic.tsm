@@ -6,8 +6,8 @@
   <title>One More Bunker — Zvanični sajt</title>
   <meta name="description" content="Zalihe u bunkeru ponestaju. Prelaziš iz bunkera u bunker dok se zaraza širi. Hoćeš li savladati sve prepreke na putu do sledeće faze apokalipse i pronaći svoju nestalu ćerku?">
   <link rel="stylesheet" href="style.css?v=20261126-6">
-  <link rel="stylesheet" href="intro.css?v=20261126-3">
-  <script src="intro.js?v=20261126-3" defer></script>
+  <link rel="stylesheet" href="intro.css?v=20261127-1">
+  <script src="intro.js?v=20261127-1" defer></script>
   <script src="game.js?v=20261126-1" defer></script>
 </head>
 <body class="game-page">
@@ -19,19 +19,29 @@
         <div class="tlr-dust"></div>
       </div>
       <div class="tlr-vault">
-        <div class="tlr-vault-door"></div>
-        <div class="tlr-vault-door"></div>
+        <div class="tlr-vault-recess"></div>
+        <div class="tlr-vault-opening">
+          <div class="tlr-vault-door tlr-vault-door-left"></div>
+          <div class="tlr-vault-door tlr-vault-door-right"></div>
+        </div>
+        <div class="tlr-vault-frame"></div>
+        <div class="tlr-vault-lamp"></div>
       </div>
-      <svg class="tlr-impact" viewBox="0 0 600 600" fill="none" focusable="false">
-        <g stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-          <path d="m284 275-30-32-7-46-24-22-8-58m78 154 16-51-12-33 20-64 29-24m-32 171 43-31 12-40 48-26 22-52m-121 159 64 5 29-17 58 11 52-22m-198 37 44 48 6 55 34 33 8 50m-104-177-19 60 9 37-26 60 9 39m-1-208-50 30-41-2-47 31-38 2m169-83-53-11-22-32-49-10-27-37"/>
-          <path d="m254 243-30 2-19-18m104-7 29-13 6-27m24 19 30 3 14-13m-34 96 20 28 32 6m-86 28-22 19-1 25m-32-29-23 12-5 29m-1-138-16-23-27-4" opacity=".45"/>
-        </g>
-      </svg>
-      <div class="tlr-impact-ring"></div>
-      <div class="tlr-impact-dust"></div>
-      <img class="tlr-intro-logo" src="assets/one-more-bunker.png" alt="" width="2172" height="724" decoding="async" fetchpriority="high">
-      <img class="tlr-intro-mask" src="assets/gas-mask-realistic.png" alt="" width="1254" height="1254" decoding="async" fetchpriority="high">
+      <div class="tlr-intro-titles">
+        <img class="tlr-intro-logo" src="assets/one-more-bunker.png" alt="" width="2172" height="724" decoding="async" fetchpriority="high">
+        <div class="tlr-studio-reveal">
+          <div class="tlr-studio-logo">
+            <div class="tlr-studio-half tlr-studio-half-upper">
+              <img src="assets/tlr-logo.png" alt="" width="1254" height="1254" decoding="async">
+            </div>
+            <div class="tlr-studio-half tlr-studio-half-lower">
+              <img src="assets/tlr-logo.png" alt="" width="1254" height="1254" decoding="async">
+            </div>
+          </div>
+          <span class="tlr-studio-cut"></span>
+          <span class="tlr-cut-sparks"></span>
+        </div>
+      </div>
     </div>
   </div>
   <div class="game-backdrop" aria-hidden="true"></div>
