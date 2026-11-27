@@ -98,6 +98,7 @@ a { color: inherit; }
 /* Crop the empty bands in the square logo artwork to fill the header. */
 .game-header .studio-logo {
   width: clamp(150px, 16vw, 210px);
+  transform: translateX(clamp(-18px, -1.2vw, -4px)) scale(.97);
   height: auto;
   aspect-ratio: 1.85;
   object-fit: cover;
