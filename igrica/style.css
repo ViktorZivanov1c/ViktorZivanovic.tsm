@@ -508,13 +508,32 @@ body.tlr-intro-active { overflow: hidden; }
   position: absolute;
   inset: 0;
   background: #0d100e;
+  display: grid;
+  place-items: center;
+  container-type: size;
+  grid-template: minmax(0, 1fr) / minmax(0, 1fr);
 }
-.tlr-corridor img {
+.tlr-shadow-plate {
+  position: relative;
+  width: max(100cqw, 150cqh);
+  aspect-ratio: 3 / 2;
+  grid-area: 1 / 1;
+  justify-self: center;
+}
+.tlr-shadow-plate :is(img, svg) {
+  position: absolute;
+  inset: 0;
   display: block;
   width: 100%;
   height: 100%;
-  object-fit: cover;
-  object-position: center;
+}
+.is-playing .tlr-shadow-sway {
+  transform-origin: 49% 72%;
+  animation: tlr-shadow-turn var(--tlr-duration) ease-in-out both;
+}
+@keyframes tlr-shadow-turn {
+  0%, 11% { transform: rotate(-1deg); }
+  21%, 100% { transform: rotate(1.4deg) skewX(.5deg); }
 }
 .tlr-corridor::after {
   content: '';
@@ -523,13 +542,13 @@ body.tlr-intro-active { overflow: hidden; }
   background: linear-gradient(90deg, #080907aa 36%, transparent 47% 53%, #080907aa 64%);
 }
 @media (orientation: portrait) {
-  .tlr-corridor img { object-fit: contain; transform: scale(1.8); }
+  .tlr-shadow-plate { width: 102cqw; }
 }
 .is-playing .tlr-corridor { animation: tlr-corridor-hide var(--tlr-duration) steps(1, end) both; }
 /* Switch to the empty bunker while the two leaves meet. */
 @keyframes tlr-corridor-hide {
   0% { opacity: 1; }
-  26%, 100% { opacity: 0; }
+  23%, 100% { opacity: 0; }
 }
 .tlr-vault-opening {
   inset: var(--tlr-frame);
@@ -560,8 +579,8 @@ body.tlr-intro-active { overflow: hidden; }
 .tlr-vault-door-right::before { left: 50%; }
 .is-playing .tlr-vault-door::before { animation: tlr-rim-light var(--tlr-duration) linear both; }
 @keyframes tlr-rim-light {
-  0%, 3%, 25%, 100% { opacity: 0; }
-  13%, 22% { opacity: .8; }
+  0%, 10%, 22%, 100% { opacity: 0; }
+  16%, 18% { opacity: .8; }
 }
 .tlr-vault-opening::before,
 .tlr-vault-opening::after {
@@ -776,9 +795,9 @@ body.tlr-intro-active { overflow: hidden; }
 .is-playing .tlr-dust { animation: tlr-dust-drift var(--tlr-duration) linear both; }
 
 @keyframes tlr-door-release {
-  0%, 3% { transform: translateX(0); }
-  13%, 22% { transform: translateX(calc(var(--direction) * 12%)); }
-  25%, 29% {
+  0%, 10% { transform: translateX(0); }
+  16%, 18% { transform: translateX(calc(var(--direction) * 5.5%)); }
+  22%, 29% {
     transform: translateX(0);
     animation-timing-function: cubic-bezier(.68, .03, .92, .68);
   }
