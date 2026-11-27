@@ -78,9 +78,11 @@ a { color: inherit; }
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: clamp(24px, 5vw, 80px);
+  --nav-gap: clamp(24px, 5vw, 80px);
+  --header-inset: max(5vw, calc((100vw - 1120px) / 2));
+  gap: var(--nav-gap);
   min-height: var(--game-header-height);
-  padding: 7px max(5vw, calc((100% - 1120px) / 2));
+  padding: 7px var(--header-inset);
   border-bottom: 1px solid #7d817a;
   background: linear-gradient(180deg, #080b09, #0b0e0b);
   box-shadow: 0 1px 0 #000c, 0 10px 30px #0003;
@@ -98,7 +100,7 @@ a { color: inherit; }
 /* Crop the empty bands in the square logo artwork to fill the header. */
 .game-header .studio-logo {
   width: clamp(150px, 16vw, 210px);
-  transform: translateX(clamp(-18px, -1.2vw, -4px)) scale(.97);
+  transform: translateX(calc((var(--nav-gap) - var(--header-inset)) / 2)) scale(.97);
   height: auto;
   aspect-ratio: 1.85;
   object-fit: cover;
@@ -406,7 +408,7 @@ a { color: inherit; }
 @media (max-width: 600px) {
   :root { --game-header-height: 106px; }
   .game-header { flex-direction: column; align-items: flex-start; gap: 3px; padding: 8px 16px; }
-  .game-header .studio-logo { width: 128px; }
+  .game-header .studio-logo { width: 128px; transform: scale(.97); }
   .game-header .game-nav { width: 100%; gap: 2px 8px; }
   .studio-logo { width: 100px; height: 100px; }
   .game-hero { min-height: max(620px, calc(100svh - var(--game-header-height))); padding: 54px 24px 68px; }
