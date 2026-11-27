@@ -502,32 +502,23 @@ body.tlr-intro-active { overflow: hidden; }
 
 /* One continuous photograph, split at its real center seam. */
 .tlr-vault { z-index: 2; }
-.tlr-threshold {
-  position: absolute;
-  inset: 71% 0 0;
-  opacity: 0;
-  background:
-    radial-gradient(ellipse at 50% 75%, #ffe5afab, transparent 13%),
-    linear-gradient(180deg, #fff0c9c9, #e8c78e91 64%, #caa87536);
-  clip-path: polygon(49.5% 0, 50.5% 0, 60% 100%, 42% 100%);
-}
-.tlr-threshold svg {
-  position: absolute;
-  left: 50%; bottom: 14%; width: clamp(16px, 2vw, 30px);
-  transform: translateX(-50%) rotate(-17deg) skewX(-8deg) scaleY(.69);
-  color: #342f24; opacity: .82;
-}
-.is-playing .tlr-threshold { animation: threshold-light var(--tlr-duration) linear both; }
-.tlr-vault-opening > .tlr-threshold::before {
-  content: '';
+.tlr-corridor {
   position: absolute;
   inset: 0;
-  background: linear-gradient(96deg, transparent 49%, #fff3d378 50%, transparent 51%);
+  background: #0d100e;
 }
-@keyframes threshold-light {
-  0%, 7%, 36%, 100% { opacity: 0; }
-  17%, 30% { opacity: 1; }
-  22% { opacity: .65; }
+.tlr-corridor img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  transform: translateX(-2%);
+}
+.is-playing .tlr-corridor { animation: tlr-corridor-hide var(--tlr-duration) steps(1, end) both; }
+/* Switch to the empty bunker while the two leaves meet. */
+@keyframes tlr-corridor-hide {
+  0% { opacity: 1; }
+  26%, 100% { opacity: 0; }
 }
 .tlr-vault-opening {
   inset: var(--tlr-frame);
@@ -759,11 +750,9 @@ body.tlr-intro-active { overflow: hidden; }
 
 @keyframes tlr-door-release {
   0%, 3% { transform: translateX(0); }
-  17%, 20% { transform: translateX(calc(var(--direction) * 6%)); }
-  22% { transform: translateX(calc(var(--direction) * 4.5%)); }
-  24% { transform: translateX(calc(var(--direction) * 6.6%)); }
-  26%, 29% {
-    transform: translateX(calc(var(--direction) * 5.5%));
+  13%, 22% { transform: translateX(calc(var(--direction) * 12%)); }
+  25%, 29% {
+    transform: translateX(0);
     animation-timing-function: cubic-bezier(.68, .03, .92, .68);
   }
   35%, 100% { transform: translateX(calc(var(--direction) * 51%)); }

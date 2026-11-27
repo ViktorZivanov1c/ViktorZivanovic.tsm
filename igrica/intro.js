@@ -90,7 +90,7 @@
   async function prepare() {
     if (finished || started) return;
     try {
-      await Promise.all([logo.decode(), studio.decode(), door.decode()]);
+      await Promise.all([logo.decode(), studio.decode(), door.decode(), intro.querySelector('.tlr-corridor img').decode()]);
       play();
     } catch {
       finish();
