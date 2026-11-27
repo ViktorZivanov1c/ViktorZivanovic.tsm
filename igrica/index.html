@@ -5,8 +5,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>One More Bunker — Zvanični sajt</title>
   <meta name="description" content="Zalihe u bunkeru ponestaju. Prelaziš iz bunkera u bunker dok se zaraza širi. Hoćeš li savladati sve prepreke na putu do sledeće faze apokalipse i pronaći svoju nestalu ćerku?">
-  <link rel="stylesheet" href="style.css?v=20261127-20">
-  <script src="intro.js?v=20261127-20" defer></script>
+  <link rel="preload" as="image" href="assets/blast-doors.jpg" media="(prefers-reduced-motion: no-preference)" fetchpriority="high">
+  <script>
+    if (matchMedia('(prefers-reduced-motion: no-preference)').matches) {
+      document.documentElement.classList.add('intro-pending');
+      // Release the first frame even if the deferred controller cannot load.
+      setTimeout(() => document.documentElement.classList.remove('intro-pending'), 6000);
+    }
+  </script>
+  <link rel="stylesheet" href="style.css?v=20261127-21">
+  <script src="intro.js?v=20261127-21" defer></script>
   <script src="game.js?v=20261127-5" defer></script>
 </head>
 <body class="game-page">
@@ -20,7 +28,7 @@
       <div class="tlr-vault">
         <div class="tlr-vault-recess"></div>
         <div class="tlr-vault-opening">
-          <div class="tlr-corridor"><img src="assets/corridor-shadow.jpg" alt="" fetchpriority="high"></div>
+          <div class="tlr-corridor"><img src="assets/shadow-wall.jpg" alt="" decoding="async"></div>
           <div class="tlr-vault-door tlr-vault-door-left"></div>
           <div class="tlr-vault-door tlr-vault-door-right"></div>
         </div>

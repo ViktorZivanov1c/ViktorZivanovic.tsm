@@ -8,7 +8,7 @@
   const studioLogo = intro.querySelector('.tlr-studio-logo');
   const sparks = intro.querySelector('.tlr-cut-sparks');
   const door = new Image();
-  door.src = 'assets/bunker-blast-doors.png';
+  door.src = 'assets/blast-doors.jpg';
   const motion = window.matchMedia('(prefers-reduced-motion: reduce)');
   let finished = false;
   let started = false;
@@ -64,6 +64,7 @@
   function finish() {
     if (finished) return;
     finished = true;
+    document.documentElement.classList.remove('intro-pending');
     window.clearTimeout(timeout);
     motion.removeEventListener('change', onMotionChange);
     window.removeEventListener('pagehide', finish);
@@ -104,6 +105,7 @@
   document.body.classList.add('tlr-intro-active');
   content.inert = true;
   intro.hidden = false;
+  document.documentElement.classList.remove('intro-pending');
   motion.addEventListener('change', onMotionChange);
   window.addEventListener('pagehide', finish);
   intro.addEventListener('animationend', (event) => {
