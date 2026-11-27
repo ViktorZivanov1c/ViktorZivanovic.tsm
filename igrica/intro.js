@@ -30,9 +30,9 @@
   function buildFragments() {
     // Clip the original mark into the T, L and R, each cut along the same diagonal.
     const letters = [
-      [0, 36.4, -62, -74, -25, -40, 61, 18],
-      [36.4, 61.3, -8, -98, 14, 18, 82, -17],
-      [61.3, 100, 70, -62, 28, 57, 75, -22]
+      [0, 36.4, -2.8, -4.5, -1.5, -1.3, 5, 1],
+      [36.4, 61.3, -.8, -5, 1, 1.2, 6, -.8],
+      [61.3, 100, 2, -4, 1.4, 3, 5, -1.2]
     ];
     for (const [left, right, ux, uy, ur, lx, ly, lr] of letters) {
       const start = 76 - .48 * left;
@@ -46,8 +46,8 @@
       const left = edges[i] / 1254 * 100;
       const right = edges[i + 1] / 1254 * 100;
       createFragment(`${left}% 79%, ${right}% 79%, ${right}% 100%, ${left}% 100%`,
-        (i - 6) * 13, i % 3 === 0 ? -65 - i * 3 : 85 + (i % 4) * 15,
-        (i % 2 ? 1 : -1) * (18 + i * 4));
+        (i - 6) * .45, 4 + (i % 4) * .8,
+        (i % 2 ? 1 : -1) * (1 + i * .09));
     }
     for (let i = 0; i < 12; i++) {
       const spark = document.createElement('i');
@@ -83,7 +83,7 @@
     window.clearTimeout(timeout);
     // Also recover if animationend never fires or the animation CSS is missing.
     intro.classList.add('is-playing');
-    const seconds = parseFloat(window.getComputedStyle(intro).animationDuration) || 8.8;
+    const seconds = parseFloat(window.getComputedStyle(intro).animationDuration) || 10.8;
     timeout = window.setTimeout(finish, seconds * 1000 + 400);
   }
 

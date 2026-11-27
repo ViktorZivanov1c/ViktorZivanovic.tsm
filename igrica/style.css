@@ -418,7 +418,7 @@ a { color: inherit; }
 
 /* Cinematic bunker intro. Kept in the main stylesheet so it ships with the page. */
 .tlr-intro {
-  --tlr-duration: 8.8s;
+  --tlr-duration: 10.8s;
   --tlr-frame: clamp(18px, 5vw, 84px);
   position: fixed;
   z-index: 1000;
@@ -708,18 +708,18 @@ body.tlr-intro-active { overflow: hidden; }
 }
 @keyframes tlr-letter-scatter {
   0%, 61% {
-    opacity: 1;
     transform: translate(0, 0) rotate(0);
-    animation-timing-function: cubic-bezier(.22, .08, .38, 1);
+    animation-timing-function: cubic-bezier(.25, .12, .35, 1);
   }
-  88% {
-    opacity: 1;
+  100% {
     transform: translate(var(--fly-x), var(--fly-y)) rotate(var(--spin));
-    animation-timing-function: ease-in;
   }
-  96%, 100% {
-    opacity: 0;
-    transform: translate(calc(var(--fly-x) * 1.15), calc(var(--fly-y) * 1.25 + 12px)) rotate(calc(var(--spin) * 1.2));
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .game-page { cursor: url('assets/bunker-cursor.svg') 2 2, auto; }
+  .game-page a[href], .game-page button:enabled {
+    cursor: url('assets/bunker-cursor-active.svg') 2 2, pointer;
   }
 }
 @keyframes tlr-cut-sparks {
@@ -774,17 +774,29 @@ body.tlr-intro-active { overflow: hidden; }
   background: #171810e8;
   color: #e7d1a5;
 }
-.team-grid, .media-grid { display: grid; gap: 14px; margin-top: 30px; }
+#tim, #mreze {
+  width: 100%;
+  padding: clamp(54px, 7vw, 100px) max(clamp(18px, 5vw, 64px), calc((100% - 1120px) / 2));
+  background: #171b19;
+}
+#mreze { background: #101412; }
+.team-grid, .media-grid { display: grid; gap: clamp(14px, 2vw, 24px); margin-top: 36px; }
 .team-grid { grid-template-columns: repeat(6, minmax(0, 1fr)); }
 .team-member, .media-card {
-  padding: clamp(16px, 2.5vw, 30px);
-  background: linear-gradient(130deg, #232620ef, #101310f5);
-  border: 1px solid #62675a88;
+  position: relative;
+  padding: clamp(20px, 2.8vw, 36px);
+  background: linear-gradient(135deg, #303732, #1e2421 76%);
+  border: 1px solid #535b53;
+  box-shadow: inset 0 1px #ffffff0d, 0 6px 14px #0003;
 }
-.team-member { grid-column: span 2; }
+.team-member { grid-column: span 2; display: flex; flex-direction: column; min-height: 192px; }
+.team-member::before {
+  content: ''; width: 36px; height: 4px; margin-bottom: 22px;
+  background: repeating-linear-gradient(115deg, var(--role) 0 5px, transparent 5px 8px);
+}
 .team-member:nth-child(-n+2) { grid-column: span 3; }
-.team-member h3 { margin: 0 0 16px; color: var(--role); font-size: 1.28rem; }
-.team-member ul { display: flex; flex-wrap: wrap; gap: 6px; list-style: none; margin: 0; padding: 0; }
+.team-member h3 { margin: 0 0 22px; color: var(--role); font: 600 clamp(1.45rem, 2.3vw, 2rem)/1.1 'Bahnschrift Condensed', Bahnschrift, 'Arial Narrow', sans-serif; letter-spacing: -.025em; }
+.team-member ul { display: flex; flex-wrap: wrap; gap: 7px; list-style: none; margin: auto 0 0; padding: 14px 0 0; border-top: 1px solid #485048; }
 .team-member li { display: inline-flex; align-items: center; gap: 6px; padding: 4px 9px; border-radius: 20px; background: #101310; border: 1px solid #55594d; font-size: .82rem; }
 .team-member li::before { content: ''; flex: none; width: 7px; height: 7px; border-radius: 50%; background: var(--role); }
 .role-1 { --role: #8ec6ee; } /* Web programiranje */
@@ -797,17 +809,31 @@ body.tlr-intro-active { overflow: hidden; }
 .role-8 { --role: #b4adee; } /* Crtanje */
 .role-9 { --role: #de9e8e; } /* Sound effects */
 .role-10 { --role: #abd087; } /* Game Tester */
-.role-11 { --role: #d2a47e; } /* ☕ Kuva kafu i sprema nudle */
+.role-11 { --role: #d2a47e; } /* Kuva kafu i sprema nudle */
 .team-member li.role-6 { border-color: var(--role); font-weight: 700; color: var(--role); }
 .media-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-.media-card { display: flex; align-items: center; gap: 16px; text-decoration: none; font-weight: 650; color: #deded4; }
-.media-card svg { width: 28px; height: 28px; flex: none; }
+.media-card {
+  display: flex; flex-direction: column; align-items: flex-start; justify-content: space-between;
+  gap: 28px; min-height: clamp(150px, 16vw, 212px); overflow: hidden;
+  background: linear-gradient(120deg, var(--channel-panel), #171c1a 80%);
+  border-bottom: 3px solid var(--channel);
+  color: #eeeee8; text-decoration: none;
+  font: 650 clamp(1.45rem, 2.8vw, 2.2rem)/1.1 Bahnschrift, 'Arial Narrow', sans-serif;
+}
+.media-card[data-network=youtube] { --channel: #ef9180; --channel-panel: #392927; }
+.media-card[data-network=instagram] { --channel: #daabcb; --channel-panel: #352b36; }
+.media-card[data-network=tiktok] { --channel: #8cd4d0; --channel-panel: #203533; }
+.media-card::before {
+  content: ''; position: absolute; top: -36px; right: -36px; width: 128px; height: 128px;
+  border: 1px solid var(--channel); border-radius: 50%; opacity: .2;
+  box-shadow: 0 0 0 10px var(--channel-panel), 0 0 0 11px var(--channel);
+}
+.media-card svg { width: 38px; height: 38px; flex: none; color: var(--channel); }
 .media-card[href]:is(:hover, :focus-visible) { border-color: var(--game-amber); color: var(--game-amber); }
 .game-footer { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 28px; padding: 32px max(5vw, calc((100% - 1120px)/2)); background: #090b09; border-top: 1px solid #65695f; }
 .footer-brand { display: flex; align-items: center; gap: 16px; }
 .footer-brand img { width: 56px; height: 56px; }
 .footer-brand small { display: block; margin-top: 6px; color: #afafa4; line-height: 1.6; }
-.footer-brand a { color: var(--game-amber); }
 .game-footer nav { display: flex; flex-wrap: wrap; gap: 16px; font: 700 .84rem/1.5 monospace; }
 .game-footer nav a { text-decoration: none; }
 .game-footer nav span { color: #888b80; }
