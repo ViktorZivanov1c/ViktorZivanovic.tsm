@@ -873,6 +873,7 @@ body.tlr-intro-active { overflow: hidden; }
 .role-9 { --role: #de9e8e; } /* Sound effects */
 .role-10 { --role: #abd087; } /* Game Tester */
 .role-11 { --role: #d2a47e; } /* Kuva kafu i sprema nudle */
+.role-12 { --role: #75d5a2; } /* Financier */
 .team-member li.role-6 { border-color: var(--role); font-weight: 600; color: var(--role); }
 .media-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 .media-card {
