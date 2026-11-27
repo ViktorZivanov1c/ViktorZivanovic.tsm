@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>One More Bunker — Zvanični sajt</title>
   <meta name="description" content="Zalihe u bunkeru ponestaju. Prelaziš iz bunkera u bunker dok se zaraza širi. Hoćeš li savladati sve prepreke na putu do sledeće faze apokalipse i pronaći svoju nestalu ćerku?">
-  <link rel="stylesheet" href="style.css?v=20261127-6">
-  <script src="intro.js?v=20261127-5" defer></script>
+  <link rel="stylesheet" href="style.css?v=20261127-9">
+  <script src="intro.js?v=20261127-8" defer></script>
   <script src="game.js?v=20261127-4" defer></script>
 </head>
 <body class="game-page">
@@ -47,6 +47,13 @@
   <main id="game-page">
     <header class="game-header">
       <img class="studio-logo" src="assets/tlr-logo.png" alt="Logotip TLR studija" width="1254" height="1254">
+      <nav class="game-nav" aria-label="Glavna navigacija">
+        <a href="#prica">PRIČA</a>
+        <span aria-disabled="true">GEJMPLEJ</span>
+        <a href="#timeline">TIMELINE</a>
+        <a href="#tim">TIM</a>
+        <a href="#mreze">MREŽE</a>
+      </nav>
     </header>
     <section class="game-hero" aria-labelledby="game-title">
       <img class="game-hero-image" src="assets/bunker.png" alt="" width="1672" height="941" fetchpriority="high">
@@ -103,23 +110,23 @@
       <div class="team-grid">
         <article class="team-member role-1">
           <h3>Viktor Živanović</h3>
-          <ul><li class="role-1">Web programiranje</li><li class="role-2">Pomoć programiranju</li><li class="role-3">Music</li><li class="role-4">Media</li><li class="role-5">Sound effects trailer</li></ul>
+          <ul><li class="role-1"><span>Web programiranje</span></li><li class="role-2"><span>Pomoć programiranju</span></li><li class="role-3"><span>Music</span></li><li class="role-4"><span>Media</span></li><li class="role-5"><span>Sound effects trailer</span></li></ul>
         </article>
         <article class="team-member role-6">
           <h3>Vasilije Avramović</h3>
-          <ul><li class="role-6">Project Manager</li><li class="role-7">Programiranje</li><li class="role-8">Crtanje</li><li class="role-9">Sound effects</li></ul>
+          <ul><li class="role-6"><span>Project Manager</span></li><li class="role-7"><span>Programiranje</span></li><li class="role-8"><span>Crtanje</span></li><li class="role-9"><span>Sound effects</span></li></ul>
         </article>
         <article class="team-member role-10">
           <h3>Aleksa Bošnić</h3>
-          <ul><li class="role-10">Game Tester</li><li class="role-4">Media</li></ul>
+          <ul><li class="role-10"><span>Game Tester</span></li><li class="role-4"><span>Media</span></li></ul>
         </article>
         <article class="team-member role-11">
           <h3>Filip Živić</h3>
-          <ul><li class="role-11">Kuva kafu i sprema nudle</li><li class="role-10">Game Tester</li></ul>
+          <ul><li class="role-11"><span>Kuva kafu i sprema nudle</span></li><li class="role-10"><span>Game Tester</span></li></ul>
         </article>
         <article class="team-member role-10">
           <h3>Branko Đukić</h3>
-          <ul><li class="role-10">Game Tester</li><li class="role-4">Media</li><li class="role-8">Crtanje</li></ul>
+          <ul><li class="role-10"><span>Game Tester</span></li><li class="role-4"><span>Media</span></li><li class="role-8"><span>Crtanje</span></li></ul>
         </article>
       </div>
     </section>
@@ -144,7 +151,7 @@
           <small>Tim: Viktor Živanović, Vasilije Avramović, Aleksa Bošnić, Filip Živić i Branko Đukić.</small>
         </div>
       </div>
-      <nav aria-label="Navigacija u podnožju">
+      <nav class="game-nav" aria-label="Navigacija u podnožju">
         <a href="#prica">PRIČA</a>
         <span aria-disabled="true">GEJMPLEJ</span>
         <a href="#timeline">TIMELINE</a>

@@ -83,7 +83,7 @@
     window.clearTimeout(timeout);
     // Also recover if animationend never fires or the animation CSS is missing.
     intro.classList.add('is-playing');
-    const seconds = parseFloat(window.getComputedStyle(intro).animationDuration) || 10.8;
+    const seconds = parseFloat(window.getComputedStyle(intro).animationDuration) || 8.2;
     timeout = window.setTimeout(finish, seconds * 1000 + 400);
   }
 
