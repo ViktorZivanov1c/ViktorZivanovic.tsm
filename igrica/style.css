@@ -78,7 +78,7 @@ a { color: inherit; }
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 20px;
+  gap: clamp(24px, 5vw, 80px);
   min-height: var(--game-header-height);
   padding: 7px max(5vw, calc((100% - 1120px) / 2));
   border-bottom: 1px solid #7d817a;
@@ -93,6 +93,21 @@ a { color: inherit; }
   object-fit: contain;
   mask: url('assets/tlr-logo.png') center / contain no-repeat;
   mask-mode: luminance;
+}
+
+/* Crop the empty bands in the square logo artwork to fill the header. */
+.game-header .studio-logo {
+  width: clamp(150px, 16vw, 210px);
+  height: auto;
+  aspect-ratio: 1.85;
+  object-fit: cover;
+  mask-size: cover;
+}
+.game-header .game-nav {
+  flex: 1;
+  justify-content: space-between;
+  gap: 6px 12px;
+  font-size: clamp(1rem, 1.65vw, 1.55rem);
 }
 
 .game-hero {
@@ -389,8 +404,9 @@ a { color: inherit; }
 
 @media (max-width: 600px) {
   :root { --game-header-height: 106px; }
-  .game-header { flex-direction: column; align-items: flex-start; gap: 0; padding: 4px 20px 14px; }
-  .game-header .studio-logo { width: 74px; height: 74px; }
+  .game-header { flex-direction: column; align-items: flex-start; gap: 3px; padding: 8px 16px; }
+  .game-header .studio-logo { width: 128px; }
+  .game-header .game-nav { width: 100%; gap: 2px 8px; }
   .studio-logo { width: 100px; height: 100px; }
   .game-hero { min-height: max(620px, calc(100svh - var(--game-header-height))); padding: 54px 24px 68px; }
   .game-hero-image { object-position: 63% center; }
