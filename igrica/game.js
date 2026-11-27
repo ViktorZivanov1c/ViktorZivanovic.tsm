@@ -1,4 +1,24 @@
 (() => {
+  // Unesi pune URL adrese profila. Prazno polje ostavlja karticu neaktivnom.
+  const MEDIA_URLS = {
+    youtube: '',
+    instagram: '',
+    tiktok: ''
+  };
+
+  for (const card of document.querySelectorAll('[data-network]')) {
+    const value = MEDIA_URLS[card.dataset.network].trim();
+    if (!value) continue;
+    try {
+      const url = new URL(value);
+      if (!['https:', 'http:'].includes(url.protocol)) continue;
+      card.href = url.href;
+      card.removeAttribute('aria-disabled');
+    } catch {
+      // Neispravna adresa ostavlja samo ovu karticu neaktivnom.
+    }
+  }
+
   // UNESI YOUTUBE LINK ZA ZVANIČNU NAJAVU OVDE (ostavi prazno dok nije dostupan).
   const OFFICIAL_TRAILER_URL = '';
 

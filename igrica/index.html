@@ -5,9 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>One More Bunker — Zvanični sajt</title>
   <meta name="description" content="Zalihe u bunkeru ponestaju. Prelaziš iz bunkera u bunker dok se zaraza širi. Hoćeš li savladati sve prepreke na putu do sledeće faze apokalipse i pronaći svoju nestalu ćerku?">
-  <link rel="stylesheet" href="style.css?v=20261127-2">
-  <script src="intro.js?v=20261127-2" defer></script>
-  <script src="game.js?v=20261126-1" defer></script>
+  <link rel="stylesheet" href="style.css?v=20261127-4">
+  <script src="intro.js?v=20261127-3" defer></script>
+  <script src="game.js?v=20261127-4" defer></script>
 </head>
 <body class="game-page">
   <div class="tlr-intro" aria-hidden="true" hidden>
@@ -30,14 +30,13 @@
         <img class="tlr-intro-logo" src="assets/one-more-bunker.png" alt="" width="2172" height="724" decoding="async" fetchpriority="high">
         <div class="tlr-studio-reveal">
           <div class="tlr-studio-logo">
-            <div class="tlr-studio-half tlr-studio-half-upper">
-              <img src="assets/tlr-logo.png" alt="" width="1254" height="1254" decoding="async">
-            </div>
-            <div class="tlr-studio-half tlr-studio-half-lower">
-              <img src="assets/tlr-logo.png" alt="" width="1254" height="1254" decoding="async">
-            </div>
+            <img class="tlr-studio-source" src="assets/tlr-logo.png" alt="" width="1254" height="1254" decoding="async" hidden>
           </div>
-          <span class="tlr-studio-cut"></span>
+          <svg class="tlr-studio-cut" viewBox="0 0 400 216" fill="none" preserveAspectRatio="none" focusable="false">
+            <path class="tlr-cut-trail" pathLength="1" d="M -10 166.8 58 149.1 59 148.2 137 128.4 138 129 231 103.6 232 103.9 327 79 410 57.7"/>
+            <path class="tlr-cut-core" pathLength="1" d="M -10 166.8 58 149.1 59 148.2 137 128.4 138 129 231 103.6 232 103.9 327 79 410 57.7"/>
+          </svg>
+          <span class="tlr-cut-tip"></span>
           <span class="tlr-cut-sparks"></span>
         </div>
       </div>
@@ -73,7 +72,7 @@
       <span class="game-scene-edge"></span>
       <span class="game-scene-edge"></span>
     </div>
-    <section class="game-story" aria-labelledby="game-story-title">
+    <section class="game-story" id="prica" aria-labelledby="game-story-title">
       <div class="game-story-inner">
         <figure class="game-story-art">
           <img class="game-story-logo" src="assets/one-more-bunker.png" alt="One More Bunker" width="2172" height="724" loading="lazy">
@@ -91,8 +90,67 @@
         </div>
       </div>
     </section>
+    <section class="project-section" id="timeline" aria-labelledby="timeline-title">
+      <p class="section-label">TOK RAZVOJA PROJEKTA</p>
+      <h2 id="timeline-title">TIMELINE / REALIZACIJA</h2>
+      <p>Pogledaj kako One More Bunker dobija oblik, od prvog menija do novih protivnika.</p>
+      <p class="timeline-notice">Uskoro stiže ceo timeline.</p>
+    </section>
+    <section class="project-section" id="tim" aria-labelledby="team-title">
+      <p class="section-label">KREATORI PROJEKTA</p>
+      <h2 id="team-title">Razvojni tim</h2>
+      <p>Ovo je ekipa koja je od nule osnovala The Last Ration (TLR) i osmislila One More Bunker.</p>
+      <div class="team-grid">
+        <article class="team-member role-1">
+          <h3>Viktor Živanović</h3>
+          <ul><li class="role-1">Web programiranje</li><li class="role-2">Pomoć programiranju</li><li class="role-3">Music</li><li class="role-4">Media</li><li class="role-5">Sound effects trailer</li></ul>
+        </article>
+        <article class="team-member role-6">
+          <h3>Vasilije Avramović</h3>
+          <ul><li class="role-6">Project Manager</li><li class="role-7">Programiranje</li><li class="role-8">Crtanje</li><li class="role-9">Sound effects</li></ul>
+        </article>
+        <article class="team-member role-10">
+          <h3>Aleksa Bošnić</h3>
+          <ul><li class="role-10">Game Tester</li><li class="role-4">Media</li></ul>
+        </article>
+        <article class="team-member role-11">
+          <h3>Filip Živić</h3>
+          <ul><li class="role-11">☕ Kuva kafu i sprema nudle</li></ul>
+        </article>
+        <article class="team-member role-10">
+          <h3>Branko Đukić</h3>
+          <ul><li class="role-10">Game Tester</li><li class="role-4">Media</li></ul>
+        </article>
+      </div>
+    </section>
+    <section class="project-section" id="mreze" aria-labelledby="media-title">
+      <h2 id="media-title">MEDIA</h2>
+      <div class="media-grid">
+        <a class="media-card" data-network="youtube" role="link" aria-disabled="true" target="_blank" rel="noopener noreferrer">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M23 7s-.3-2-1.2-2.9C20.6 3 12 3 12 3S3.4 3 2.2 4.1C1.3 5 1 7 1 7s-.5 4.7 0 9.4c.2 1.3.6 2.4 1.4 3C3.6 20.5 12 20.5 12 20.5s8.4 0 9.6-1.1c.8-.6 1.2-1.7 1.4-3 .5-4.7 0-9.4 0-9.4Z"/><path fill="#151615" d="m10 8 6 4-6 4z"/></svg>YouTube
+        </a>
+        <a class="media-card" data-network="instagram" role="link" aria-disabled="true" target="_blank" rel="noopener noreferrer">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><g stroke="currentColor" stroke-width="2" fill="none"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4.5"/></g><circle cx="18" cy="6" r="1.3" fill="currentColor"/></svg>Instagram
+        </a>
+        <a class="media-card" data-network="tiktok" role="link" aria-disabled="true" target="_blank" rel="noopener noreferrer">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M15 2h3c.3 3 2.1 4.8 5 5v3.4a9 9 0 0 1-5-1.7v7.2a7 7 0 1 1-7-7v3.5a3.5 3.5 0 1 0 3.5 3.5V2z"/></svg>TikTok
+        </a>
+      </div>
+    </section>
     <footer class="game-footer">
-      <a href="../index.html">Nazad na školski sajt</a>
+      <div class="footer-brand">
+        <img class="studio-logo" src="assets/tlr-logo.png" alt="TLR" width="56" height="56">
+        <div>THE LAST RATION © 2026 • <a href="../index.html">Školski projekat</a>
+          <small>Tim: Viktor Živanović, Vasilije Avramović, Aleksa Bošnić, Filip Živić i Branko Đukić.</small>
+        </div>
+      </div>
+      <nav aria-label="Navigacija u podnožju">
+        <a href="#prica">PRIČA</a>
+        <span aria-disabled="true">GEJMPLEJ</span>
+        <a href="#timeline">TIMELINE</a>
+        <a href="#tim">TIM</a>
+        <a href="#mreze">MREŽE</a>
+      </nav>
     </footer>
   </main>
 </body>
