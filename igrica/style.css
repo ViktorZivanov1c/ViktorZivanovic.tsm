@@ -475,8 +475,27 @@ body.tlr-intro-active { overflow: hidden; }
   background: url('assets/bunker-blast-doors.png') center / cover no-repeat;
   will-change: transform;
 }
-.tlr-vault-door-left { clip-path: inset(0 50% 0 0); }
-.tlr-vault-door-right { clip-path: inset(0 0 0 50%); }
+.tlr-vault-door-left { --direction: -1; clip-path: inset(0 50% 0 0); }
+.tlr-vault-door-right { --direction: 1; clip-path: inset(0 0 0 50%); }
+.tlr-vault-opening::before,
+.tlr-vault-opening::after {
+  content: '';
+  position: absolute;
+  z-index: 1;
+  bottom: 0;
+  width: clamp(90px, 24vw, 390px);
+  height: 80%;
+  opacity: 0;
+  background:
+    radial-gradient(ellipse at 18% 86%, #baa78988, transparent 36%),
+    radial-gradient(ellipse at 39% 76%, #a398796e, transparent 28%),
+    radial-gradient(ellipse at 11% 49%, #c2b49577, transparent 25%),
+    radial-gradient(ellipse at 4% 27%, #ad9e864d, transparent 22%),
+    radial-gradient(ellipse at 32% 98%, #81766199, transparent 47%);
+  filter: blur(3px);
+}
+.tlr-vault-opening::before { left: 0; --mirror: 1; transform-origin: left bottom; }
+.tlr-vault-opening::after { left: 100%; --mirror: -1; transform-origin: left bottom; }
 .tlr-vault-door::after {
   position: absolute;
   inset: 0;
@@ -659,8 +678,9 @@ body.tlr-intro-active { overflow: hidden; }
 .tlr-intro.is-playing { animation: tlr-intro-exit var(--tlr-duration) linear both; }
 .is-playing .tlr-bunker { animation: tlr-bunker-arrival var(--tlr-duration) ease-out both; }
 .is-playing .tlr-vault { animation: tlr-vault-depart var(--tlr-duration) linear both; }
-.is-playing .tlr-vault-door-left { animation: tlr-door-left var(--tlr-duration) both; }
-.is-playing .tlr-vault-door-right { animation: tlr-door-right var(--tlr-duration) both; }
+.is-playing .tlr-vault-door { animation: tlr-door-release var(--tlr-duration) both; }
+.is-playing .tlr-vault-opening::before,
+.is-playing .tlr-vault-opening::after { animation: tlr-stop-dust var(--tlr-duration) both; }
 .is-playing .tlr-intro-logo { animation: tlr-title-reveal var(--tlr-duration) both; }
 .is-playing .tlr-studio-reveal { animation: tlr-studio-reveal var(--tlr-duration) both; }
 .is-playing .tlr-studio-fragment { animation: tlr-letter-scatter var(--tlr-duration) linear both; }
@@ -671,15 +691,22 @@ body.tlr-intro-active { overflow: hidden; }
 .is-playing .tlr-haze { animation: tlr-haze-drift var(--tlr-duration) ease-out both; }
 .is-playing .tlr-dust { animation: tlr-dust-drift var(--tlr-duration) linear both; }
 
-@keyframes tlr-door-left {
-  0%, 10.54% { transform: translateX(0); animation-timing-function: cubic-bezier(.58, .02, .25, 1); }
-  13.17% { transform: translateX(-.3%); animation-timing-function: cubic-bezier(.58, .02, .25, 1); }
-  44.78%, 100% { transform: translateX(-52%); }
+@keyframes tlr-door-release {
+  0%, 3% { transform: translateX(0); }
+  17%, 20% { transform: translateX(calc(var(--direction) * 6%)); }
+  22% { transform: translateX(calc(var(--direction) * 4.5%)); }
+  24% { transform: translateX(calc(var(--direction) * 6.6%)); }
+  26%, 29% {
+    transform: translateX(calc(var(--direction) * 5.5%));
+    animation-timing-function: cubic-bezier(.68, .03, .92, .68);
+  }
+  35%, 100% { transform: translateX(calc(var(--direction) * 51%)); }
 }
-@keyframes tlr-door-right {
-  0%, 10.54% { transform: translateX(0); animation-timing-function: cubic-bezier(.58, .02, .25, 1); }
-  13.17% { transform: translateX(.3%); animation-timing-function: cubic-bezier(.58, .02, .25, 1); }
-  44.78%, 100% { transform: translateX(52%); }
+@keyframes tlr-stop-dust {
+  0%, 35% { opacity: 0; transform: scaleX(var(--mirror)) scale(.28, .58); }
+  36.5% { opacity: .95; transform: scaleX(var(--mirror)) scale(.77, .85); }
+  41% { opacity: .7; transform: translateY(-2%) scaleX(var(--mirror)) scale(1, 1.03); }
+  52%, 100% { opacity: 0; transform: translateY(-7%) scaleX(var(--mirror)) scale(1.24, 1.12); }
 }
 @keyframes tlr-vault-depart {
   0%, 35.56% { opacity: 1; transform: scale(1); }
@@ -803,18 +830,14 @@ body.tlr-intro-active { overflow: hidden; }
 .team-member h3 {
   margin: 0 0 12px;
   color: var(--role);
-  font: 900 clamp(1.65rem, 2.5vw, 2.25rem)/1.12 var(--game-type);
+  font: 600 clamp(1.65rem, 2.5vw, 2.25rem)/1.18 Bahnschrift, 'Segoe UI', sans-serif;
   letter-spacing: .025em;
   text-transform: uppercase;
+  mask-image: url('assets/type-fissures.svg'), linear-gradient(#000b, #000b);
+  mask-size: 2.6em 1.14em, 100% 100%;
 }
 .team-member ul { display: flex; flex-wrap: wrap; gap: 7px; list-style: none; margin: 0; padding: 0; }
-.team-member li { display: inline-flex; align-items: center; gap: 7px; padding: 4px 9px; border-radius: 3px; background: #161a17; border: 1px solid #50564c; font: 800 .94rem/1.35 var(--game-type); letter-spacing: .035em; }
-/* Cut the fissures into the lettering alone, keeping the role badges intact. */
-.team-member h3, .team-member li span {
-  mask-image: url('assets/type-fissures.svg');
-  mask-size: 2.6em 1.14em;
-}
-.team-member li span { mask-size: 3.6em 1.8em; }
+.team-member li { display: inline-flex; align-items: center; gap: 7px; padding: 4px 9px; border-radius: 3px; background: #161a17; border: 1px solid #50564c; font: 500 .94rem/1.4 'Segoe UI', system-ui, sans-serif; letter-spacing: .01em; }
 .team-member li::before { content: ''; flex: none; width: 7px; height: 7px; border-radius: 50%; background: var(--role); }
 .role-1 { --role: #8ec6ee; } /* Web programiranje */
 .role-2 { --role: #86bfbc; } /* Pomoć programiranju */
@@ -827,7 +850,7 @@ body.tlr-intro-active { overflow: hidden; }
 .role-9 { --role: #de9e8e; } /* Sound effects */
 .role-10 { --role: #abd087; } /* Game Tester */
 .role-11 { --role: #d2a47e; } /* Kuva kafu i sprema nudle */
-.team-member li.role-6 { border-color: var(--role); font-weight: 700; color: var(--role); }
+.team-member li.role-6 { border-color: var(--role); font-weight: 600; color: var(--role); }
 .media-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 .media-card {
   display: flex; flex-direction: column; align-items: flex-start; justify-content: space-between;
