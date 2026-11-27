@@ -375,6 +375,28 @@ a { color: inherit; }
 }
 .game-story-text p { margin: 0 0 24px; }
 .game-story-text p:last-child { margin-bottom: 0; }
+.story-map {
+  display: block;
+  margin: 0 0 26px;
+  overflow: hidden;
+  border: 1px solid #71634c;
+  box-shadow: 0 8px 22px #0006;
+}
+.story-map img { display: block; width: 100%; height: auto; }
+.story-map:focus-visible { outline: 2px solid var(--game-amber); outline-offset: 4px; }
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .story-map {
+      animation: map-emerge linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 85%;
+    }
+  }
+}
+@keyframes map-emerge {
+  from { opacity: .3; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
 
 .game-footer { display: grid; min-height: 132px; padding: 40px 24px; place-items: center; }
 .game-footer a { color: #b9b5a9; font-size: .875rem; text-decoration-color: #827554; text-underline-offset: 5px; }
@@ -480,6 +502,33 @@ body.tlr-intro-active { overflow: hidden; }
 
 /* One continuous photograph, split at its real center seam. */
 .tlr-vault { z-index: 2; }
+.tlr-threshold {
+  position: absolute;
+  inset: 71% 0 0;
+  opacity: 0;
+  background:
+    radial-gradient(ellipse at 50% 75%, #ffe5afab, transparent 13%),
+    linear-gradient(180deg, #fff0c9c9, #e8c78e91 64%, #caa87536);
+  clip-path: polygon(49.5% 0, 50.5% 0, 60% 100%, 42% 100%);
+}
+.tlr-threshold svg {
+  position: absolute;
+  left: 50%; bottom: 14%; width: clamp(16px, 2vw, 30px);
+  transform: translateX(-50%) rotate(-17deg) skewX(-8deg) scaleY(.69);
+  color: #342f24; opacity: .82;
+}
+.is-playing .tlr-threshold { animation: threshold-light var(--tlr-duration) linear both; }
+.tlr-vault-opening > .tlr-threshold::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(96deg, transparent 49%, #fff3d378 50%, transparent 51%);
+}
+@keyframes threshold-light {
+  0%, 7%, 36%, 100% { opacity: 0; }
+  17%, 30% { opacity: 1; }
+  22% { opacity: .65; }
+}
 .tlr-vault-opening {
   inset: var(--tlr-frame);
   overflow: hidden;
@@ -624,7 +673,7 @@ body.tlr-intro-active { overflow: hidden; }
   opacity: 0;
   perspective: 800px;
 }
-/* Luminance removes the black pixels, including inside each letter. */
+/* Each fragment clips the same transparent lettering artwork. */
 .tlr-studio-logo {
   position: absolute;
   inset: 0;
@@ -641,9 +690,7 @@ body.tlr-intro-active { overflow: hidden; }
   position: absolute;
   inset: 0;
   display: block;
-  background: linear-gradient(165deg, #fff 15%, #e7e9e7 54%, #fafbf9 75%, #d4d8d2);
-  mask: url('assets/tlr-logo.png') center / 100% auto no-repeat;
-  mask-mode: luminance;
+  background: url('assets/tlr-intro-letters.png') center / 100% auto no-repeat;
   clip-path: var(--fragment-clip);
 }
 .tlr-studio-cut {

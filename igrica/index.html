@@ -5,9 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>One More Bunker — Zvanični sajt</title>
   <meta name="description" content="Zalihe u bunkeru ponestaju. Prelaziš iz bunkera u bunker dok se zaraza širi. Hoćeš li savladati sve prepreke na putu do sledeće faze apokalipse i pronaći svoju nestalu ćerku?">
-  <link rel="stylesheet" href="style.css?v=20261127-16">
+  <link rel="stylesheet" href="style.css?v=20261127-19">
   <script src="intro.js?v=20261127-8" defer></script>
-  <script src="game.js?v=20261127-4" defer></script>
+  <script src="game.js?v=20261127-5" defer></script>
 </head>
 <body class="game-page">
   <div class="tlr-intro" aria-hidden="true" hidden>
@@ -20,6 +20,11 @@
       <div class="tlr-vault">
         <div class="tlr-vault-recess"></div>
         <div class="tlr-vault-opening">
+          <div class="tlr-threshold">
+            <svg viewBox="0 0 30 60" fill="currentColor" aria-hidden="true">
+              <path d="M6 5Q12 -1 20 4l2 4-7 2-10-2zm-2 6 10 3 10-4 1 5-10 4-12-4zm-1 7 12 4 11-4-1 5-10 4-11-5zm2 8 10 4 9-4-2 6-7 3-8-4zm4 8 6 4 6-3-1 5-8 2zM11 46l10-3 2 5-12 3zm1 8 11-3q1 8-6 8-4 0-5-5z"/>
+            </svg>
+          </div>
           <div class="tlr-vault-door tlr-vault-door-left"></div>
           <div class="tlr-vault-door tlr-vault-door-right"></div>
         </div>
@@ -30,7 +35,7 @@
         <img class="tlr-intro-logo" src="assets/one-more-bunker.png" alt="" width="2172" height="724" decoding="async" fetchpriority="high">
         <div class="tlr-studio-reveal">
           <div class="tlr-studio-logo">
-            <img class="tlr-studio-source" src="assets/tlr-logo.png" alt="" width="1254" height="1254" decoding="async" hidden>
+            <img class="tlr-studio-source" src="assets/tlr-intro-letters.png" alt="" width="1254" height="1254" decoding="async" hidden>
           </div>
           <svg class="tlr-studio-cut" viewBox="0 0 400 216" fill="none" preserveAspectRatio="none" focusable="false">
             <path class="tlr-cut-trail" pathLength="1" d="M -10 166.8 58 149.1 59 148.2 137 128.4 138 129 231 103.6 232 103.9 327 79 410 57.7"/>
@@ -95,6 +100,9 @@
           <div class="game-story-text">
             <p>Prve noći zombi apokalipse, dok grad tone u haos, zaraženi ugrize tvoju ćerku. Naoružani ljudi je odvode pre nego što stigneš da dođeš do nje. Ostaješ sam u bunkeru, bez ikakvog traga o tome gde su je odveli.</p>
             <p>Godinu dana kasnije, dok ti zalihe ponestaju, kroz šum radija začuješ njen glas. Stiže da izgovori samo broj bunkera pre nego što se veza prekine. Pretražuješ stare mape, ali tog broja nema ni na jednoj.</p>
+            <a class="story-map" href="assets/radio-map.jpg" target="_blank" rel="noopener" aria-label="Otvori mapu u punoj veličini u novom tabu">
+              <img src="assets/radio-map.jpg" width="1672" height="941" loading="lazy" alt="Na mapi su označeni bunkeri B-04 i B-12. Uz zaokruženu šumu stoji rukom napisana beleška: Čula se jasno. Bunker 17?">
+            </a>
             <p>Sa poslednjim zalihama napuštaš sklonište i krećeš kroz svet opustošen zarazom. Od napuštenih naselja do podzemnih bunkera, tražiš bilo kakav trag koji bi mogao da te odvede do nje. Sada znaš da je živa. Moraš da je pronađeš i izvedeš odatle pre nego što zaraza odnese i tebe.</p>
           </div>
         </div>

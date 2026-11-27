@@ -1,7 +1,7 @@
 (() => {
   // Unesi pune URL adrese profila. Prazno polje ostavlja karticu neaktivnom.
   const MEDIA_URLS = {
-    youtube: '',
+    youtube: 'https://www.youtube.com/channel/UCSE_VmHStXz35PAXVsmA34w',
     instagram: '',
     tiktok: ''
   };
